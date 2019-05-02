@@ -40,6 +40,7 @@ Page({
   },
   //上传学生证照片
   changeHust: function() {
+    var that = this
     wx.chooseImage({
       count: 1,
       sizeType: ['original'],
@@ -52,7 +53,10 @@ Page({
           filePath: tempFilePaths[0],
           name: 'hust',
           success: function(res) {
-            console.log(res)
+            var data = JSON.parse(res.data)
+            that.setData({
+              hustImage: app.serverUrl + data.hustImage
+            })
           }
         })
       },
@@ -63,7 +67,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    console.log('hustImage: ')
+    console.log(this.hustImage)
   },
 
   /**
