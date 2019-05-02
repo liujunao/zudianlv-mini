@@ -10,9 +10,31 @@ Page({
       that.setData({
         hasUserInfo: true
       })
-      //页面自动跳转到主页面
-      wx.reLaunch({
-        url: '../rent/rent',
+      //登录校验
+      wx.login({
+        success: function(res) {
+          var code = res.code //获取临时凭证
+          console.log("code: " + code)
+          //校验用户信息是否改变，如： 昵称、头像等
+          wx.request({
+            url: app.serverUrl + '/user/wxLogin?code=' + code,
+            method: "POST",
+            header: {
+              'content-type': 'application/json' // 默认值
+            },
+            success: function(res) {
+              console.log(res.data)
+              var openId = app.getGlobalUserInfo().openId
+              //若用户信息改变，则需用户再次进行权限认证 getUserInfo
+              if (res.data.openId == openId) { //用户信息未改变
+                //页面自动跳转到主页面
+                wx.reLaunch({
+                  url: '../user/user',
+                })
+              }
+            }
+          })
+        }
       })
     }
   },
@@ -22,7 +44,7 @@ Page({
       success: function(res) {
         var code = res.code //获取临时凭证
         wx.request({
-          url: app.serverUrl + '/user/wxLogin',
+          url: app.serverUrl + '/user/wxRegister',
           method: "POST",
           data: {
             code: code,
@@ -35,39 +57,14 @@ Page({
           },
           success: function(res) {
             console.log(res.data)
-            // if (res.data.id) {
-            //   app.setGlobalUserInfo(res.data)
-            // }
+            if (res.data.openId) {
+              app.setGlobalUserInfo(res.data)
+            }
             //页面自动跳转到主页面
             wx.reLaunch({
-              url: '../rent/rent',
+              url: '../user/user',
             })
           }
-        })
-      }
-    })
-  },
-  click: function() {
-    wx.request({
-      url: app.serverUrl + '/user/wxLogin',
-      method: "POST",
-      data: {
-        code: "code",
-        nickName: "yinren",
-        gender: 1,
-        avatarUrl: "http"
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data)
-        // if (res.data.id) {
-        //   app.setGlobalUserInfo(res.data)
-        // }
-        //页面自动跳转到主页面
-        wx.reLaunch({
-          url: '../rent/rent',
         })
       }
     })

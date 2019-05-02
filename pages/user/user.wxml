@@ -1,0 +1,18 @@
+<!--pages/user/user.wxml-->
+<text>pages/user/user.wxml</text>
+
+<!-- 补全个人信息 -->
+<view>
+  <form bindsubmit='appendUser'>
+    <input name="college" placeholder="请输入学院"/><!-- 尽量做成下拉框 -->
+    <input name="grade" placeholder="请输入年级"/><!-- 下拉框 -->
+    <input name="area" placeholder="请输入宿舍区"/><!-- 下拉框 -->
+    <input name="areaNum" placeholder="请输入楼栋"/><!-- 下拉框：数字 -->
+    <input name="weixin" placeholder="请输入微信"/>
+    <button type='primary' form-type='submit'>提交</button>
+  </form>
+</view>
+
+<view>
+  <image src='{{hustImage}}' bindtap='changeHust'></image>
+</view>
