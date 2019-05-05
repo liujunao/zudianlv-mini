@@ -1,0 +1,15 @@
+.marginRight {
+  margin-right: 50rpx;
+}
+
+.filterLabel {
+  margin: 20rpx 35rpx;
+}
+
+.selectBox {
+  /* 详情页面的白色框 */
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #fff;
+  padding: 25rpx 35rpx;
+}

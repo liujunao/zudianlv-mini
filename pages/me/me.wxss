@@ -1,0 +1,37 @@
+.container {
+  padding-top:2rpx;
+}
+
+.avaterImg {
+  width:130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+}
+
+.nickname {
+  color: var(--mainColor);
+  font-size: 1.5em;
+  margin:10rpx 20rpx;
+}
+
+.topBox{
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #fff;
+  padding: 25rpx 40rpx 50rpx 40rpx;
+  margin-bottom: 0;
+  border-bottom: 20rpx solid var(--bgColor)
+}
+
+.itemBox {
+  padding: 25rpx 40rpx;
+  border-bottom: 1px solid var(--bgColor);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.labelFont {
+  font-size: 1em;
+  color: #000;
+}

@@ -1,0 +1,8 @@
+.container {
+  padding-top:2rpx;
+}
+
+.carImage {
+  height: 240rpx;
+  width: 360rpx;
+}

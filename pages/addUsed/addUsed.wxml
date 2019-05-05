@@ -1,0 +1,30 @@
+<view class="container" style='padding-bottom: 500rpx'>
+  <view class='detail-box flex-row-item-center' bindtap='addPicClick'>
+    <image wx:if='{{imageUrl}}' src='{{imageUrl}}' class='addImage'></image>
+    <view wx:else class='addPictureBox flex-row-item-center  flex-row-center'>
+      <image src='../../assert/icons/addPic.png' style='width:65rpx; height:65rpx'></image>
+    </view>
+    <view wx:if='{{imageUrl}}' class='unselected-font' style='margin-left:50rpx'>更换图片</view>
+    <view wx:else class='unselected-font' style='margin-left:50rpx'>添加电动车照片</view>
+  </view>
+  <view class='detail-box flex-row'>
+    <view class='text-font'>描述：</view>
+    <textarea maxlength='100' placeholder='添加二手车描述信息，不超过100字哦~' bindinput='noteInput' class='text-area'></textarea>
+  </view>
+
+  <view class='detail-box'>
+    <view class='flex-row-SpcBwn'>
+      <view class='text-font'>价格</view>
+      <picker bindchange="priceChange" start='1000' value='6' range="{{priceArray}}">
+        <view wx:if="{{price}}" class='text-font'>
+          {{price}}￥
+        </view>
+        <view wx:else class='unselected-font'>
+          1000￥
+        </view>
+      </picker>
+    </view>
+  </view>
+  <button class='confirm-btn' style="position:fixed; bottom:0;" bindtap='compliteClick'>完成</button>
+  
+</view>

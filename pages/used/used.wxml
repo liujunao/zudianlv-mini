@@ -1,0 +1,39 @@
+<view class="container" style='min-height: 100%;;padding-bottom: 300rpx'>
+  <view class='flex-row-SpcBwn' style='margin:20rpx 40rpx'>
+    <view></view>
+    <view class='black-normal-font' bindtap='addClick'>发布二手车信息</view>
+  </view>
+
+  <block wx:for="{{posts}}" wx:key="item">
+    <view class='post-box' data-postdetail='{{item}}' bindtap='postClick'>
+      <view class='flex-row-SpcBwn'>
+        <view class='flex-row-item-center'>
+          <image class='avater-image' src='{{item.avatarUrl}}'></image>
+          <view class='flex-col'>
+            <image wx:if="{{item.gender==0}}" class='gender-icon' src='{{manUrl}}'></image>
+            <image wx:else class='gender-icon' src='{{womanUrl}}'></image>
+            <view class='type-font'>#二手车</view>
+          </view>
+        </view>
+        <view class='main-label-font'>{{item.money}}￥</view>
+      </view>
+
+      <view class='flex-row' style='margin:15rpx 0 15rpx 60rpx'>
+        <image mode='aspectFit' class='car-image' style='height: 240rpx;width: 360rpx' src='{{item.usedImage}}'></image>
+      </view>
+
+      <view class='flex-row-item-center' style='margin:0rpx 0 0rpx 60rpx; position:relative'>
+        <view class='flex-row-item-center'>
+          <image src='{{orientedUrl}}' style='width:20rpx;height:20rpx;margin-right:4rpx'></image>
+          <view class='main-normal-font' style='font-size:0.7em; margin-right:20rpx'>{{item.area}}{{item.areaNum}}栋</view>
+        </view>
+        <!-- <view class='black-label-font' style='margin-right:30rpx'>{{item.area}}{{item.area_num}}栋</view> -->
+        <view class='text-ellipsis message-font' style='width:300rpx'>{{item.message}}</view>
+        <view class='time-font' style='position:absolute;right:0;bottom:0'>{{item.createTime}}发布</view>
+      </view>
+
+    </view>
+  </block>
+
+  <!-- <image class='addIcon' src='../../assert/icons/add.png' bindtap='addClick'></image> -->
+</view>

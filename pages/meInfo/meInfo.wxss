@@ -1,0 +1,22 @@
+.itemBox {
+  padding: 25rpx 40rpx;
+  border-bottom: 1px solid var(--bgColor);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.labelFont {
+  font-size: 1em;
+  color: #000;
+}
+
+.addPictureBox {
+  width: 200rpx;
+  height: 200rpx;
+  border: 1px dashed #8d8d8d;
+}
+.addImage {
+  width: 250rpx;
+  height: 250rpx;
+}

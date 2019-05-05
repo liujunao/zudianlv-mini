@@ -1,15 +1,50 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/me/me",
+    "pages/filter/filter",
+    "pages/meInfo/meInfo",
     "pages/rent/rent",
-    "pages/user/user"
+    "pages/addUsed/addUsed",
+    "pages/addWanted/addWanted",
+    "pages/addRent/addRent",
+    "pages/used/used",
+    "pages/wanted/wanted",
+    "pages/usedDetail/usedDetail",
+    "pages/rentDetail/rentDetail",
+    "pages/wantedDetail/wantedDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "租电驴",
+    "navigationBarBackgroundColor": "white", 
+    "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap.json",
-  "debug": true
+  "tabBar": {
+    "color": "#fff",
+    "selectedColor": "#FFAAC1",
+    "backgroundColor": "#000000",
+    "list": [
+      {
+        "pagePath": "pages/rent/rent",
+        "text": "出租"
+      },
+      {
+        "pagePath": "pages/wanted/wanted",
+        "text": "用车"
+      },
+      {
+        "pagePath": "pages/used/used",
+        "text": "二手车"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于[更多->买修车]中地图定位"
+    }
+  }
 }

@@ -1,0 +1,42 @@
+<view class='container' style='padding-bottom: 360rpx'>
+  <view class='detail-box flex-row-center'>
+    <image mode='aspectFit' style='height:400rpx;width:600rpx' src='{{postDetail.usedImage}}'></image>
+  </view>
+
+  <view class='detail-box'>
+    <view class='flex-col  box-btm-border' style='padding-bottom:15rpx;margin-bottom:20rpx'>
+      <view class='flex-row-item-center'>
+        <image class='avater-image' src='{{postDetail.avatarUrl}}'></image>
+        <view class='flex-col'>
+          <image wx:if="{{postDetail.gender==0}}" class='gender-icon' src='{{manUrl}}'></image>
+          <image wx:else class='gender-icon' src='{{womanUrl}}'></image>
+          <view class='type-font' style='color:#000000'>车主备注</view>
+        </view>
+      </view>
+
+      <view class='black-bigger-font' style='margin:15rpx 0 15rpx 60rpx'>
+        <view style='padding:0 40rpx 20rpx 0'>{{postDetail.message}}</view>
+      </view>
+    </view>
+
+    <view class='flex-row' style='position:relative'>
+
+      <view class='flex-row-item-center'>
+        <image src='{{orientedUrl}}' style='width:25rpx;height:25rpx;margin-right:4rpx'></image>
+        <view class='main-normal-font'>{{postDetail.area}}{{postDetail.areaNum}}栋</view>
+      </view>
+
+      <view class='time-font' style='position:absolute;right:0;bottom:0'>{{postDetail.createTime}}发布</view>
+    </view>
+  </view>
+
+  <view class='detail-box'>
+    <view class='flex-row-SpcBwn'>
+      <view class='black-label-font'>意愿价格</view>
+      <view class='black-normal-font'>{{postDetail.money}}￥/h</view>
+    </view>
+  </view>
+
+    <button wx:if="{{type==1}}" class='confirm-btn' style="position:fixed; bottom:0;" bindtap='rentClick'>确认发布</button>
+  <button wx:else class='confirm-btn' style="position:fixed; bottom:0;" bindtap='rentClick'>联系Ta</button>
+</view>

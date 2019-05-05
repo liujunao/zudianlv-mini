@@ -1,0 +1,48 @@
+<view class='itemBox'>
+  <view style='labelFont'>学院</view>
+  <picker bindchange="collegeChange" range="{{collegeArray}}">
+    <view wx:if="{{college}}" class='text-font'>
+      {{college}}
+    </view>
+    <view wx:else class='unselected-font'>
+      未选择
+    </view>
+  </picker>
+</view>
+
+<view class='itemBox'>
+  <view style='labelFont'>年级</view>
+   <picker bindchange="gradeChange" range="{{gradeArray}}">
+    <view wx:if="{{grade}}" class='text-font'>
+      {{grade}}
+    </view>
+    <view wx:else class='unselected-font'>
+      未选择
+    </view>
+  </picker>
+</view>
+
+<view class='itemBox'>
+  <view style='labelFont'>楼栋</view>
+  <picker mode="multiSelector" bindchange="bindMultiPickerChange" value="{{multiIndex}}" range="{{multiArray}}">
+    <view wx:if="{{!apartment}}" class='unselected-font'>未选择</view>
+    <view wx:else class='text-font'>{{apartment}}{{building}}栋</view>
+  </picker>
+</view>
+
+
+<view class='itemBox' style='margin-top:40rpx'>
+  <view style='labelFont'>校园身份认证</view>
+  <view class='unselected-font' bindtap='openIdentifyClick'>未认证</view>
+</view>
+
+ <view wx:if="{{openIdentify}}" class='detail-box flex-row-item-center' bindtap='addPicClick'>
+    <image wx:if='{{imageUrl}}' src='{{imageUrl}}' class='addImage'></image>
+    <view wx:else class='addPictureBox flex-row-item-center  flex-row-center'>
+      <image src='../../assert/icons/addPic.png' style='width:65rpx; height:65rpx'></image>
+    </view>
+    <view wx:if='{{imageUrl}}' class='unselected-font' style='margin-left:50rpx'>更换图片</view>
+    <view wx:else class='unselected-font' style='margin-left:50rpx'>上传学生证照片</view>
+  </view>
+
+<button class='confirm-btn' style='margin-top:100rpx' bindtap='updateClick'>更新</button>

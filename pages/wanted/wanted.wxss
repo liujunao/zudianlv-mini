@@ -1,0 +1,11 @@
+.container {
+  padding-top:2rpx;
+}
+
+.topBox {
+  padding: 18rpx 0 22rpx 25rpx;
+}
+
+.noteBox {
+  margin: 20rpx 0;
+}

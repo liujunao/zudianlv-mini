@@ -1,0 +1,15 @@
+.addPictureBox {
+  width: 200rpx;
+  height: 200rpx;
+  border: 1px dashed #8d8d8d;
+}
+.addImage {
+  width: 250rpx;
+  height: 250rpx;
+}
+
+.subIcon {
+  width: 40rpx;
+  height: 40rpx;
+  padding-right: 7rpx;
+}
