@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    hustImage: "../../resource/img/noneface.png"
+    hustImage: "../../resource/img/noneface.png",
+    carImage: "../../resource/img/noneface.png"
   },
   //补全用户信息
   appendUser: function(e) {
@@ -62,13 +63,86 @@ Page({
       },
     })
   },
+  //出租信息添加
+  addRent: function(e) {
+    var formObject = e.detail.value
+    var that = this
+
+    console.log("money: ")
+
+    wx.request({
+      url: app.serverUrl + '/user/rent/add',
+      method: "POST",
+      data: {
+        rent:{
+          openId: app.getGlobalUserInfo().openId,
+          nickName: app.getGlobalUserInfo().nickName,
+          gender: app.getGlobalUserInfo().gender,
+          avatarUrl: app.getGlobalUserInfo().avatarUrl,
+          college: app.getGlobalUserInfo().college,
+          grade: app.getGlobalUserInfo().grade,
+          area: app.getGlobalUserInfo().area,
+          areaNum: app.getGlobalUserInfo().areaNum,
+          weixin: app.getGlobalUserInfo().weixin,
+          message: formObject.message,
+          rent: formObject.rent,
+          manned: formObject.manned,
+          carImage: that.data.carImage
+        },
+        rentTime: [{
+            week: "1",
+            beginTime: "1",
+            endTime: "1"
+          },
+          {
+            week: "2",
+            beginTime: "2",
+            endTime: "2"
+          }
+        ]
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        console.log(res)
+        // var data = JSON.parse(res.data)
+        // console.log(data)
+      }
+    })
+  },
+
+  //选择车辆图片
+  changeCar: function() {
+    var that = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original'],
+      sourceType: ['album'],
+      success: function(res) {
+        var tempFilePaths = res.tempFilePaths
+        console.log(tempFilePaths)
+        wx.uploadFile({
+          url: app.serverUrl + '/user/rent/addCar?openId=' + app.getGlobalUserInfo().openId,
+          filePath: tempFilePaths[0],
+          name: 'car',
+          success: function(res) {
+            var data = JSON.parse(res.data)
+            console.log(data.carImage)
+            that.setData({
+              carImage: app.serverUrl + data.carImage
+            })
+          }
+        })
+      },
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log('hustImage: ')
-    console.log(this.hustImage)
+    console.log(app.getGlobalUserInfo())
   },
 
   /**
