@@ -8,11 +8,11 @@
   </view>
 
   <view class='itemBox'>
-    <view style='labelFont'>我的出租</view>
+    <view style='labelFont' bindtap='myRentClick'>我的出租</view>
     <image src='{{nextUrl}}' style='width:30rpx;height:30rpx'></image>
   </view>
   <view class='itemBox'>
-    <view style='labelFont'>我的求租</view>
+    <view style='labelFont'>我的租车</view>
     <image src='{{nextUrl}}' style='width:30rpx;height:30rpx'></image>
   </view>
   <view class='itemBox'>

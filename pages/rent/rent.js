@@ -79,7 +79,7 @@ Page({
   },
   addClick() {
     wx.showActionSheet({
-      itemList: ['我是车主', '我想租车'],
+      itemList: ['我想出租', '我想租车'],
       itemColor: app.globalData.mainColor,
       success(res) {
         let index = res.tapIndex;

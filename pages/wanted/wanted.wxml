@@ -8,7 +8,7 @@
           <view class='flex-col'>
             <image wx:if="{{item.gender==0}}" class='gender-icon' src='{{manUrl}}'></image>
             <image wx:else class='gender-icon' src='{{womanUrl}}'></image>
-            <view class='type-font'>#求租</view>
+            <view class='type-font'>#租车</view>
           </view>
         </view>
       </view>

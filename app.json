@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/rent/rent",
     "pages/me/me",
     "pages/filter/filter",
     "pages/meInfo/meInfo",
-    "pages/rent/rent",
     "pages/addUsed/addUsed",
     "pages/addWanted/addWanted",
     "pages/addRent/addRent",
@@ -15,7 +15,7 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "white", 
+    "navigationBarBackgroundColor": "white",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   },
@@ -30,7 +30,7 @@
       },
       {
         "pagePath": "pages/wanted/wanted",
-        "text": "用车"
+        "text": "租车"
       },
       {
         "pagePath": "pages/used/used",
@@ -42,9 +42,5 @@
       }
     ]
   },
-  "permission": {
-    "scope.userLocation": {
-      "desc": "你的位置信息将用于[更多->买修车]中地图定位"
-    }
-  }
+  "sitemapLocation": "sitemap.json"
 }
