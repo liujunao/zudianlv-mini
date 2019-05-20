@@ -1,4 +1,6 @@
+// pages/rent/rent.js
 const app = getApp()
+
 Page({
   data: {
     orientedUrl: '../../assert/icons/oriented.png',
@@ -98,5 +100,25 @@ Page({
         console.log("fail", res.errMsg)
       }
     })
-  }
+  },
+
+  selectRent: function() {
+    wx.request({
+      url: app.serverUrl + '/rent/select',
+      method: "POST",
+      data: {
+        area: "韵苑",
+        areaNum: "",
+        week: [],
+        manned: "",
+        gender: "1"
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        console.log(res.data)
+      }
+    })
+  },
 })

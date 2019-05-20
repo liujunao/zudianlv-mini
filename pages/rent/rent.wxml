@@ -54,3 +54,5 @@
 
   <image class='addIcon' src='../../assert/icons/add.png' bindtap='addClick'></image>
 </view>
+<!--pages/rent/rent.wxml-->
+<button bindtap='selectRent'>筛选查询</button>

@@ -16,3 +16,15 @@
 <view>
   <image src='{{hustImage}}' bindtap='changeHust'></image>
 </view>
+
+<!-- 出租信息添加 -->
+<view>
+  <form bindsubmit='addRent'>
+    <input name="message" placeholder="备注"/>
+    <input name="manned" placeholder="能否载人"/><!-- 下拉框 -->
+    <input name="rent" placeholder="出租信息是否展示"/><!-- 下拉框 -->
+    <image src='{{carImage}}' bindtap='changeCar'></image><!-- 选择车辆图片 -->
+    <!-- rentTime -->
+    <button type='primary' form-type='submit'>提交</button>
+  </form>
+</view>
