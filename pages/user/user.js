@@ -72,40 +72,41 @@ Page({
   addRent: function(e) {
     var formObject = e.detail.value
     var that = this
-
-    console.log("money: ")
+    let data = {
+      rent: {
+        openId: app.getGlobalUserInfo().openId,
+        nickName: app.getGlobalUserInfo().nickName,
+        gender: app.getGlobalUserInfo().gender,
+        avatarUrl: app.getGlobalUserInfo().avatarUrl,
+        college: app.getGlobalUserInfo().college,
+        grade: app.getGlobalUserInfo().grade,
+        area: app.getGlobalUserInfo().area,
+        areaNum: app.getGlobalUserInfo().areaNum,
+        weixin: app.getGlobalUserInfo().weixin,
+        money: 1,
+        message: "出租",
+        rent: 1,
+        manned: 1,
+        carImage: "asdasdfasd"
+      },
+      rentTime: [{
+        week: "1",
+        beginTime: "1",
+        endTime: "220"
+      },
+      {
+        week: "2",
+        beginTime: "2",
+        endTime: "2"
+      }
+      ]
+    };
+    console.log("data: ",data)
 
     wx.request({
       url: app.serverUrl + '/user/rent/add',
       method: "POST",
-      data: {
-        rent: {
-          openId: app.getGlobalUserInfo().openId,
-          nickName: app.getGlobalUserInfo().nickName,
-          gender: app.getGlobalUserInfo().gender,
-          avatarUrl: app.getGlobalUserInfo().avatarUrl,
-          college: app.getGlobalUserInfo().college,
-          grade: app.getGlobalUserInfo().grade,
-          area: app.getGlobalUserInfo().area,
-          areaNum: app.getGlobalUserInfo().areaNum,
-          weixin: app.getGlobalUserInfo().weixin,
-          message: "出租",
-          rent: 1,
-          manned: 1,
-          carImage: "asdasdfasd"
-        },
-        rentTime: [{
-            week: "1",
-            beginTime: "1",
-            endTime: "220"
-          },
-          {
-            week: "2",
-            beginTime: "2",
-            endTime: "2"
-          }
-        ]
-      },
+      data: data,
       header: {
         'content-type': 'application/json' // 默认值
       },
