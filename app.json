@@ -1,17 +1,18 @@
 {
   "pages": [
+    "pages/user/user",
+    "pages/rentDetail/rentDetail",
+    "pages/addRent/addRent",
+    "pages/me/me",
+    "pages/meInfo/meInfo",
     "pages/index/index",
     "pages/rent/rent",
-    "pages/me/me",
     "pages/filter/filter",
-    "pages/meInfo/meInfo",
     "pages/addUsed/addUsed",
     "pages/addWanted/addWanted",
-    "pages/addRent/addRent",
     "pages/used/used",
     "pages/wanted/wanted",
     "pages/usedDetail/usedDetail",
-    "pages/rentDetail/rentDetail",
     "pages/wantedDetail/wantedDetail"
   ],
   "window": {

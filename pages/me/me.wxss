@@ -1,9 +1,9 @@
 .container {
-  padding-top:2rpx;
+  padding-top: 2rpx;
 }
 
-.avaterImg {
-  width:130rpx;
+.avatarImg {
+  width: 130rpx;
   height: 130rpx;
   border-radius: 50%;
 }
@@ -11,16 +11,16 @@
 .nickname {
   color: var(--mainColor);
   font-size: 1.5em;
-  margin:10rpx 20rpx;
+  margin: 10rpx 20rpx;
 }
 
-.topBox{
+.topBox {
   box-sizing: border-box;
   width: 100%;
   background-color: #fff;
   padding: 25rpx 40rpx 50rpx 40rpx;
   margin-bottom: 0;
-  border-bottom: 20rpx solid var(--bgColor)
+  border-bottom: 20rpx solid var(--bgColor);
 }
 
 .itemBox {
@@ -31,7 +31,29 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .labelFont {
   font-size: 1em;
   color: #000;
+}
+
+.getUserInfo {
+  color: #707070;
+  font-size: 1rem;
+  /* margin-left: 10rpx; */
+  background-color: #ffffff;
+}
+button::after{ border: none; } 
+
+.nextIcon {
+  width: 30rpx;
+  height: 30rpx;
+}
+.selectedFont {
+  color: #51c332;
+  font-size: 0.6rem;
+}
+.passIcon {
+  width: 20rpx;
+  height: 20rpx;
 }

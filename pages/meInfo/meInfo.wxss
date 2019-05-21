@@ -20,3 +20,18 @@
   width: 250rpx;
   height: 250rpx;
 }
+.selectedFont {
+  color: #51c332;
+}
+.buttonNotWork {
+  background-color: #8d8d8d;
+  width: 90%;
+  margin: 5% 5%;
+  color: #fff;
+  z-index: 2;
+}
+.passIcon {
+  width: 35rpx;
+  height: 35rpx;
+  
+}

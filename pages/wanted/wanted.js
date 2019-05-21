@@ -65,13 +65,20 @@ Page({
   },
   addClick() {
     wx.showActionSheet({
-      itemList: ['空闲贴(我是车主)', '出租帖(我是车主)', '用车贴(我想租车)'],
-      itemColor: '#17B978',
+      itemList: ['我想出租', '我想租车'],
+      itemColor: app.globalData.mainColor,
       success(res) {
-        let index = res.tapIndex + 1;
-        wx.navigateTo({
-          url: '../add/add?type=' + index,
-        })
+        let index = res.tapIndex;
+        if (index == 0) {
+          wx.navigateTo({
+            url: '../addRent/addRent?'
+          })
+        }
+        if (index == 1) {
+          wx.navigateTo({
+            url: '../addWanted/addWanted?'
+          })
+        }
       },
       fail(res) {
         console.log("fail", res.errMsg)

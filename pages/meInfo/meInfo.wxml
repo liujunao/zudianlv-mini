@@ -12,7 +12,7 @@
 
 <view class='itemBox'>
   <view style='labelFont'>年级</view>
-   <picker bindchange="gradeChange" range="{{gradeArray}}">
+  <picker bindchange="gradeChange" range="{{gradeArray}}">
     <view wx:if="{{grade}}" class='text-font'>
       {{grade}}
     </view>
@@ -33,16 +33,24 @@
 
 <view class='itemBox' style='margin-top:40rpx'>
   <view style='labelFont'>校园身份认证</view>
-  <view class='unselected-font' bindtap='openIdentifyClick'>未认证</view>
+  <view  wx:if="{{identified}}" class='flex-row-item-center'>
+    <image src='{{passUrl}}' class='passIcon'></image>
+    <view class='selectedFont'>已认证</view>
+  </view>
+  <view wx:else class='unselected-font' bindtap='openIdentifyClick'>未认证</view>
 </view>
 
- <view wx:if="{{openIdentify}}" class='detail-box flex-row-item-center' bindtap='addPicClick'>
-    <image wx:if='{{imageUrl}}' src='{{imageUrl}}' class='addImage'></image>
-    <view wx:else class='addPictureBox flex-row-item-center  flex-row-center'>
-      <image src='../../assert/icons/addPic.png' style='width:65rpx; height:65rpx'></image>
-    </view>
-    <view wx:if='{{imageUrl}}' class='unselected-font' style='margin-left:50rpx'>更换图片</view>
-    <view wx:else class='unselected-font' style='margin-left:50rpx'>上传学生证照片</view>
+<view wx:if="{{openIdentify}}" class='detail-box flex-row-item-center' bindtap='addPicClick'>
+  <image wx:if='{{imageUrl}}' src='{{imageUrl}}' class='addImage'></image>
+  <view wx:else class='addPictureBox flex-row-item-center  flex-row-center'>
+    <image src='../../assert/icons/addPic.png' style='width:65rpx; height:65rpx'></image>
   </view>
+  <view wx:if='{{imageUrl}}' class='unselected-font' style='margin-left:50rpx'>更换图片</view>
+  <view wx:else class='unselected-font' style='margin-left:50rpx'>上传学生证照片</view>
+</view>
 
-<button class='confirm-btn' style='margin-top:100rpx' bindtap='updateClick'>更新</button>
+<button wx:if="{{!identified}}" class='confirm-btn' style='margin-top:100rpx' bindtap='submitClick'>上传个人信息</button>
+
+<button wx:if="{{identified && !ischanging}}" class='buttonNotWork' style='margin-top:100rpx'>更新个人信息</button>
+
+<button wx:if="{{identified && ischanging}}" class='confirm-btn' style='margin-top:100rpx' bindtap='submitClick'>更新个人信息</button>

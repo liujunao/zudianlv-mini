@@ -3,7 +3,7 @@
 
 <!-- 补全个人信息 -->
 <view>
-  <form bindsubmit='appendUser'>
+  <form bindsubmit='addRent'>
     <input name="college" placeholder="请输入学院"/><!-- 尽量做成下拉框 -->
     <input name="grade" placeholder="请输入年级"/><!-- 下拉框 -->
     <input name="area" placeholder="请输入宿舍区"/><!-- 下拉框 -->
@@ -14,17 +14,8 @@
 </view>
 
 <view>
-  <image src='{{hustImage}}' bindtap='changeHust'></image>
+  <image src='{{hustImage}}'></image>
 </view>
+ <button type='primary'  bindtap='getPublishListClick'>租车贴列表</button>
 
-<!-- 出租信息添加 -->
-<view>
-  <form bindsubmit='addRent'>
-    <input name="message" placeholder="备注"/>
-    <input name="manned" placeholder="能否载人"/><!-- 下拉框 -->
-    <input name="rent" placeholder="出租信息是否展示"/><!-- 下拉框 -->
-    <image src='{{carImage}}' bindtap='changeCar'></image><!-- 选择车辆图片 -->
-    <!-- rentTime -->
-    <button type='primary' form-type='submit'>提交</button>
-  </form>
-</view>
+ <button type='primary' bindtap="getUsedListClick">出租贴列表</button>

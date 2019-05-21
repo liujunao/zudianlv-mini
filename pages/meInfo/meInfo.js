@@ -1,7 +1,10 @@
 const app = getApp()
 Page({
   data: {
-    openIdentify:false,
+    passUrl: '../../assert/icons/pass.png',
+    ischanging:false,
+    identified:false, //是否认证
+    openIdentify:false, //打开校园卡图片选择
     college: null,
     collegeArray: ["软件学院", "新闻学院", "法学院"],
     grade: null,
@@ -12,69 +15,142 @@ Page({
     multiIndex: [0, 0, 0],
     imageUrl: ''
   },
-  onLoad: function (options) {
-
+  onLoad(options) {
+    if(app.getGlobalUserInfo().hustImage){
+      console.log("已认证")
+      this.setData({
+        identified:true,
+        college:app.getGlobalUserInfo().college,
+        grade: app.getGlobalUserInfo().grade,
+        apartment:app.getGlobalUserInfo().area,
+        building:app.getGlobalUserInfo().areaNum
+      })
+    }
   },
  submitClick(){ 
-    if(!college){
+    if(!this.data.college){
       console.log("请选择学院信息")
+      wx.showToast({
+        title: '请选择学院信息',
+        icon: 'none',
+        duration: 1000
+      })
     }
-    else if(!grade){
+    else if (!this.data.grade){
       console.log("请选择年级信息")
+      wx.showToast({
+        title: '请选择年级信息',
+        icon: 'none',
+        duration: 1000
+      })
     }
-    else if (!building) {
+    else if (!this.data.building) {
       console.log("请选择楼栋信息")
+      wx.showToast({
+        title: '请选择楼栋信息',
+        icon: 'none',
+        duration: 1000
+      })
     }
-    else if (!imageUrl) {
+    else if (!this.data.imageUrl && !this.data.identified) {
       console.log("请上传学生证照片")
+      wx.showToast({
+        title: '请上传学生证照片',
+        icon: 'none',
+        duration: 1000
+      })
     }
     else{  
       //验证通过，请求后台
-      wx.request({
-        url: app.serverUrl + '/user/append',
-        method: "POST",
-        data: {
-          openId: app.getGlobalUserInfo().openId,
-          college: this.data.college,
-          grade: this.data.grade,
-          area: this.data.apartment,
-          areaNum: formObject.building,
-          /* weixin可以直接接口请求到？ */
-          weixin: formObject.weixin
-        },
-        header: {
-          'content-type': 'application/json' // 默认值
-        },
-        success: function (res) {
-          console.log(res.data)
-          if (res.data.openId) {
-            app.setGlobalUserInfo(res.data)
+      var that = this
+      if(this.data.identified){  //已经验证
+        wx.request({
+          url: app.serverUrl + '/user/append',
+          method: "POST",
+          data: {
+            openId: app.getGlobalUserInfo().openId,
+            college: that.data.college,
+            grade: that.data.grade,
+            area: that.data.apartment,
+            areaNum: that.data.building,
+            weixin: '' //不应强行填写发布时进行提醒填写
+          },
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: function (res) {
+            console.log(res.data)
+            if (res.data.openId) {
+              app.setGlobalUserInfo(res.data)
+            }
+            that.setData({
+              ischanging: false,
+            })
+            console.log("update success")
+            wx.showToast({
+              title: '更新成功',
+              duration: 1000,
+            })
           }
-          console.log("append success")
-        }
-      })
+        })
+      }
+      else{
+        wx.showLoading({
+          title: '正在上传信息',
+        })
+        wx.request({
+          url: app.serverUrl + '/user/append',
+          method: "POST",
+          data: {
+            openId: app.getGlobalUserInfo().openId,
+            college: that.data.college,
+            grade: that.data.grade,
+            area: that.data.apartment,
+            areaNum: that.data.building,
+            weixin: '' //不应强行填写,发布时进行提醒填写
+          },
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: function (res) {
+            console.log(res.data)
+            if (res.data.openId) {
+              app.setGlobalUserInfo(res.data)
+            }
+            console.log("append success")
+          }
+        })
 
-      //上传学生证图片
-      wx.uploadFile({
-        url: app.serverUrl + '/user/upload?openId=' + app.getGlobalUserInfo().openId,
-        filePath: this.data.imageUrl,
-        name: 'hust',
-        success: function (res) {
-          var data = JSON.parse(res.data)
-          that.setData({
-            imageUrl: app.serverUrl + data.hustImage
-          })
-        }
-      })
+        //上传学生证图片
+        wx.uploadFile({
+          url: app.serverUrl + '/user/upload?openId=' + app.getGlobalUserInfo().openId,
+          filePath: that.data.imageUrl,
+          name: 'hust',
+          success: function (res) {
+            console.log(res.data)
+            var data = JSON.parse(res.data)
+            console.log("上传学生证照片成功！")
+            app.setGlobalUserInfo(data)
+            that.setData({
+              identified: true,
+              openIdentify: false,
+              ischanging: false
+            })
+            wx.hideLoading()
+            
+          },
+          complete: () => {
+            
+          }
+        })
+      }
     }
     
   },
-
-
-
-  openIdentifyClick(){
-    let openIdentify = this.data.openIdentify;
-    this.setData({openIdentify: !openIdentify})
+  openIdentifyClick() {
+    this.setData({
+      openIdentify: !this.data.openIdentify
+    })
   },
   addPicClick() {
     var that = this;
@@ -85,7 +161,7 @@ Page({
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFilePaths
-        that.setData({ imageUrl: tempFilePaths })
+        that.setData({ imageUrl: tempFilePaths[0] })
       }
     })
   },
@@ -93,7 +169,8 @@ Page({
     let index = e.detail.value;
     let grade = this.data.gradeArray[index];
     this.setData({
-      grade: grade
+      grade: grade,
+      ischanging: true
     })
     console.log("年级", grade);
   },
@@ -101,7 +178,8 @@ Page({
     let index = e.detail.value;
     let college = this.data.collegeArray[index];
     this.setData({
-      college: college
+      college: college,
+      ischanging: true
     })
     console.log("学院", college);
   },
@@ -111,55 +189,8 @@ Page({
     this.setData({
       multiIndex: e.detail.value,
       apartment: this.data.multiArray[0][multiIndex[0]],
-      building: this.data.multiArray[1][multiIndex[1]]
+      building: this.data.multiArray[1][multiIndex[1]],
+      ischanging: true
     })
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
   }
 })

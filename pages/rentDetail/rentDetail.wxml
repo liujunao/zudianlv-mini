@@ -21,7 +21,11 @@
         <view class='main-normal-font'>{{postDetail.area}}{{postDetail.areaNum}}栋</view>
       </view>
 
-      <view class='time-font' style='position:absolute;right:0;bottom:0'>{{postDetail.time}}更新</view>
+      <view class='time-font' style='position:absolute;right:0;bottom:0'>
+        <text wx:if="{{postDetail.time}}">{{postDetail.time}}</text>
+        <text wx:else>1分钟前</text>
+        更新
+      </view>
     </view>
   </view>
 
@@ -48,5 +52,6 @@
   </view>
 
   <button wx:if="{{type==1}}" class='confirm-btn' style="position:fixed; bottom:0;" bindtap='publishClick'>确认发布</button>
-  <button wx:else class='confirm-btn' style="position:fixed; bottom:0;" bindtap='contactClick'>联系Ta</button>
+  <!-- <button wx:else class='confirm-btn' style="position:fixed; bottom:0;" bindtap='contactClick'>联系Ta</button> -->
+  <button wx:else class='confirm-btn' style="position:fixed; bottom:0;" bindtap='publishClick'>联系Ta</button>
 </view>

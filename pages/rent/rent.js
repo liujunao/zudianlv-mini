@@ -61,7 +61,21 @@ Page({
       },
     ]
   },
-  onLoad: function() {},
+  onLoad: function() {
+    wx.request({
+      url: app.serverUrl + '/rent/list',
+      method: "POST",
+      data: {
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log(res.data)
+      }
+    })
+
+  },
   filterClick(){
     wx.navigateTo({
       url: '../filter/filter'

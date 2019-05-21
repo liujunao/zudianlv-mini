@@ -2,30 +2,29 @@
 const app = getApp()
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    hustImage: "../../resource/img/noneface.png",
-    carImage: "../../resource/img/noneface.png"
+    hustImage: "../../assert/icons/man.png",
+    carImage: "../../assert/icons/mobile.jpg",
+  },
+  onLoad: function(options) {
+
   },
   //补全用户信息
   appendUser: function(e) {
     var formObject = e.detail.value
     //对各个字段进行简单验证
-
+    var that = this
     //验证通过，请求后台
     wx.request({
       url: app.serverUrl + '/user/append',
       method: "POST",
       data: {
         openId: app.getGlobalUserInfo().openId,
-        college: formObject.college,
-        grade: formObject.grade,
-        area: formObject.area,
-        areaNum: formObject.areaNum,
-        weixin: formObject.weixin
+        college: "软件学院",
+        grade: "大二",
+        area: "韵苑公寓",
+        areaNum: "16",
+        weixin: '' //不应强行填写发布时进行提醒填写
       },
       header: {
         'content-type': 'application/json' // 默认值
@@ -48,19 +47,25 @@ Page({
       sourceType: ['album'],
       success: function(res) {
         var tempFilePaths = res.tempFilePaths
-        console.log(tempFilePaths)
-        wx.uploadFile({
-          url: app.serverUrl + '/user/upload?openId=' + app.getGlobalUserInfo().openId,
-          filePath: tempFilePaths[0],
-          name: 'hust',
-          success: function(res) {
-            var data = JSON.parse(res.data)
-            that.setData({
-              hustImage: app.serverUrl + data.hustImage
-            })
-          }
+        console.log("图片路径", tempFilePaths)
+        that.setData({
+          hustImage: tempFilePaths[0]
         })
       },
+    })
+  },
+  uploadHust() {
+    var that = this
+    wx.uploadFile({
+      url: app.serverUrl + '/user/upload?openId=' + app.getGlobalUserInfo().openId,
+      filePath: that.data.hustImage,
+      name: 'hust',
+      success: function(res) {
+        console.log(res.data)
+        var data = JSON.parse(res.data)
+        console.log("data", data)
+        app.setGlobalUserInfo(data)
+      }
     })
   },
   //出租信息添加
@@ -74,7 +79,7 @@ Page({
       url: app.serverUrl + '/user/rent/add',
       method: "POST",
       data: {
-        rent:{
+        rent: {
           openId: app.getGlobalUserInfo().openId,
           nickName: app.getGlobalUserInfo().nickName,
           gender: app.getGlobalUserInfo().gender,
@@ -84,15 +89,15 @@ Page({
           area: app.getGlobalUserInfo().area,
           areaNum: app.getGlobalUserInfo().areaNum,
           weixin: app.getGlobalUserInfo().weixin,
-          message: formObject.message,
-          rent: formObject.rent,
-          manned: formObject.manned,
-          carImage: that.data.carImage
+          message: "出租",
+          rent: 1,
+          manned: 1,
+          carImage: "asdasdfasd"
         },
         rentTime: [{
             week: "1",
             beginTime: "1",
-            endTime: "1"
+            endTime: "220"
           },
           {
             week: "2",
@@ -105,9 +110,8 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function(res) {
-        console.log(res)
-        // var data = JSON.parse(res.data)
-        // console.log(data)
+        console.log("上传出租信息：", res.data)
+
       }
     })
   },
@@ -138,12 +142,38 @@ Page({
     })
   },
 
+  //请求出租车列表数据
+  getUsedListClick() {
+    wx.request({
+      url: app.serverUrl + '/rent/list',
+      method: "POST",
+      data: {},
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        console.log("出租列表：", res.data)
+      }
+    })
+  },
+
+  getPublishListClick() {
+    wx.request({
+      url: app.serverUrl + '/publish/list',
+      method: "POST",
+      data: {},
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        console.log("出租列表：", res.data)
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    console.log(app.getGlobalUserInfo())
-  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成

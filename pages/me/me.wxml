@@ -1,30 +1,55 @@
 <view class='container' style='background-color:#fff'>
   <view class='topBox flex-row-SpcBwn'>
-    <view class='flex-row'>
-      <image src='{{avatarUrl}}' class='avaterImg'></image>
-      <view class='nickname'>{{nickname}}</view>
+    <view wx:if='{{hasUserInfo}}' class='flex-row'>
+      <image src='{{avatarUrl}}' class='avatarImg'></image>
+      <view class='nickname'>{{username}}</view>
     </view>
-    <view class='unselected-font' style='font-size:1em' bindtap='editInfo'>基本信息</view>
+
+    <view wx:else class='flex-row-item-center'>
+      <image src='{{userUrl}}' class='avatarImg'></image>
+      <button class='getUserInfo' open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+        登录
+      </button>
+    </view>
+
+    <view>
+      <view wx:if="{{baseInfo}}" class='flex-row-item-center' style='padding-top:20rpx'>
+        <view bindtap='editInfo' class='unselected-font'>基本信息
+        </view>
+        <image src='{{nextUrl}}' class='nextIcon'></image>
+      </view>
+      <view wx:else class='flex-row-item-center'>
+        <view class='unselected-font' bindtap='editInfo'>完善信息</view>
+        <image src='{{nextUrl}}' class='nextIcon'></image>
+      </view>
+
+      <view wx:if="{{baseInfo}}" class='flex-row-item-center'>
+        <image src='{{passUrl}}' class='passIcon'></image>
+        <view class='selectedFont'>已认证</view>
+      </view>
+    </view>
+
+
   </view>
 
   <view class='itemBox'>
     <view style='labelFont' bindtap='myRentClick'>我的出租</view>
-    <image src='{{nextUrl}}' style='width:30rpx;height:30rpx'></image>
+    <image src='{{nextUrl}}' class='nextIcon'></image>
   </view>
   <view class='itemBox'>
     <view style='labelFont'>我的租车</view>
-    <image src='{{nextUrl}}' style='width:30rpx;height:30rpx'></image>
+    <image src='{{nextUrl}}' class='nextIcon'></image>
   </view>
   <view class='itemBox'>
     <view style='labelFont'>我的二手车</view>
-    <image src='{{nextUrl}}' style='width:30rpx;height:30rpx'></image>
+    <image src='{{nextUrl}}' class='nextIcon'></image>
   </view>
   <view class='itemBox'>
     <view style='labelFont'>租赁须知</view>
-    <image src='{{nextUrl}}' style='width:30rpx;height:30rpx'></image>
+    <image src='{{nextUrl}}' class='nextIcon'></image>
   </view>
   <view class='itemBox'>
     <view style='labelFont'>联系我们</view>
-    <image src='{{nextUrl}}' style='width:30rpx;height:30rpx'></image>
+    <image src='{{nextUrl}}' class='nextIcon'></image>
   </view>
 </view>

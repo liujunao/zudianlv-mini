@@ -15,38 +15,25 @@ Page({
   },
   compliteClick() { 
     //!完善帖子信息，准备发布  基本全局信息还未填写
+    let userInfo = app.getGlobalUserInfo()
+    console.log(userInfo)
     let postDetail = {
       rentId: '',
-      openId: '',
-      nickName: 'Oka',
-      avatarUrl: '../../assert/icons/avater.jpg',
-      gender: 0, //man:0, woman:1
-      area: '韵苑',
-      areaNum: 16,
-      weixin: '',
-      message: '',
-      money: 1,
-      carImage: '../../assert/icons/mobile.jpg',
-      manned: 0, //0:可载人 1：不可 2：不限
-      rentTime: [{
-        week: '周一', //求租周几： 1->周一,2-->周二     ！！！需要写处理函数
-        beginTime: '12:00', //hh:mm
-        endTime: '18:00'
-      }, {
-        week: '周二', //求租周几： 1->周一,2-->周二
-        beginTime: '12:00', //hh:mm
-        endTime: '18:00'
-      }
-      ],
-      time: '3小时前',
+      openId: userInfo.openId,
+      nickName: userInfo.nickName,
+      gender: userInfo.gender, //man:0, woman:1
+      avatarUrl: userInfo.avatarUrl,
+      area: userInfo.area,
+      areaNum: userInfo.areaNum,
+      weixin: '',  //填写
+      message: this.data.note,
+      money: this.data.price,
+      manned: parseInt(this.data.carType), //0:可载人 1：不可 2：不限
+      rent: 1,
+      carImage: this.data.imageUrl,
+      rentTime:this.data.rentTime,
       rent: 1, //1：发布展示 2：发布未展示
     };
-    postDetail.manned = this.data.carType;
-    postDetail.message = this.data.note;
-    postDetail.rentTime = this.data.rentTime;
-    postDetail.money = this.data.price;
-    postDetail.carImage = this.data.imageUrl;
-    postDetail.time = '1分钟前';
     console.log("new postdetail",postDetail);
     wx.navigateTo({
       url: '../rentDetail/rentDetail?postDetail=' + JSON.stringify(postDetail) +'&type=1'
