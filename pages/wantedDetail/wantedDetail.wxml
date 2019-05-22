@@ -40,7 +40,7 @@
 
 
 
- <button wx:if="{{type==1}}" class='confirm-btn' style="position:fixed; bottom:0;" bindtap='rentClick'>确认发布</button>
+ <button wx:if="{{type==1}}" class='confirm-btn' style="position:fixed; bottom:0;" bindtap='publishClick'>确认发布</button>
   <button wx:else class='confirm-btn' style="position:fixed; bottom:0;" bindtap='rentClick'>联系Ta</button>
 
 </view>

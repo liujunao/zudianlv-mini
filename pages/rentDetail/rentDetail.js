@@ -1,4 +1,5 @@
 const app = getApp()
+var utils = require('../../utils/util.js')
 Page({
   data: {
     orientedUrl: '../../assert/icons/oriented.png',
@@ -10,72 +11,58 @@ Page({
   },
 
   onLoad: function(options) {
-    let userInfo = app.getGlobalUserInfo()
-    let postDetail = {
-      rent:{
-        openId: userInfo.openId,
-        nickName: userInfo.nickName,
-        gender: userInfo.gender, //man:0, woman:1
-        avatarUrl: userInfo.avatarUrl,
-        college:userInfo.college,
-        grade:userInfo.grade,
-        area: userInfo.area,
-        areaNum: userInfo.areaNum,
-        weixin: '12', //填写
-        message: 'asdas',
-        money: 1,
-        manned: 1, //0:可载人 1：不可 2：不限
-        rent: 1,
-        carImage: 'asda',
-      },
-      rentTime: [{
-        week: 1,
-        beginTime: 'a',
-        endTime: 'b'
-      }]
-    };
+    let postDetail = JSON.parse(options.postDetail);
     this.setData({
       postDetail: postDetail
     });
-
-    // let postDetail = JSON.parse(options.postDetail);
-    // this.setData({
-    //   postDetail: postDetail
-    // });
-    // if(options.type){
-    //   this.setData({
-    //     type: options.type
-    //   });
-    // }
-    // console.log("this postDetail", this.data.postDetail)
-    // console.log("type",this.data.type)
+    if (options.type) {
+      this.setData({
+        type: options.type
+      });
+    }
+    console.log("this postDetail", this.data.postDetail)
+    console.log("type", this.data.type)
   },
   /* 添加接口！--------------------------- */
   /* 发布成功后跳转出租首页 */
   publishClick() {
+    let data = utils.formatRentInfo(this.data.postDetail)
+    console.log("请求发送数据", data)
     var that = this
-    console.log("postDetal info",that.data.postDetail)
     wx.request({
       url: app.serverUrl + '/user/rent/add',
       method: "POST",
-      data: that.data.postDetail,
+      data: data,
       header: {
         'content-type': 'application/json' // 默认值
       },
       success: function(res) {
-        console.log("发布成功：", res.data)
+        console.log("上传成功", res)
+      }
+    })
+    console.log("上传照片")
+    wx.uploadFile({
+      url: app.serverUrl + '/user/rent/addCar?openId=' + app.getGlobalUserInfo().openId,
+      filePath: data.rent.carImage,
+      name: 'car',
+      success: function(res) {
+        var data = JSON.parse(res.data)
+        console.log(data.carImage)
         wx.showToast({
           title: '发布成功',
           icon: 'success',
-          duration: 1000
+          duration: 1000,
+          mask: true,
+          success: function () {
+            setTimeout(function () {
+              //要延时执行的代码
+              wx.switchTab({
+                url: '../rent/rent'
+              });
+            }, 1000) //延迟时间
+          },
         })
-      },
-      complete: () => {
-
       }
-    })
-    wx.switchTab({
-      url: '../rent/rent'
     })
   },
 

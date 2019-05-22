@@ -1,18 +1,18 @@
 {
   "pages": [
     "pages/user/user",
-    "pages/rentDetail/rentDetail",
+    "pages/addUsed/addUsed",
+    "pages/usedDetail/usedDetail",
+    "pages/wanted/wanted",
+    "pages/rent/rent",
+    "pages/addWanted/addWanted",
     "pages/addRent/addRent",
+    "pages/rentDetail/rentDetail",
     "pages/me/me",
     "pages/meInfo/meInfo",
     "pages/index/index",
-    "pages/rent/rent",
     "pages/filter/filter",
-    "pages/addUsed/addUsed",
-    "pages/addWanted/addWanted",
     "pages/used/used",
-    "pages/wanted/wanted",
-    "pages/usedDetail/usedDetail",
     "pages/wantedDetail/wantedDetail"
   ],
   "window": {
@@ -27,12 +27,12 @@
     "backgroundColor": "#000000",
     "list": [
       {
-        "pagePath": "pages/rent/rent",
-        "text": "出租"
-      },
-      {
         "pagePath": "pages/wanted/wanted",
         "text": "租车"
+      },
+      {
+        "pagePath": "pages/rent/rent",
+        "text": "出租"
       },
       {
         "pagePath": "pages/used/used",
