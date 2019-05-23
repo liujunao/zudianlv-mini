@@ -62,7 +62,7 @@ Page({
             }
             //页面自动跳转到主页面
             wx.reLaunch({
-              url: '../user/user',
+              url: '../rent/rent',
             })
           }
         })

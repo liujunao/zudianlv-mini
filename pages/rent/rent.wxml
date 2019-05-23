@@ -1,2 +1,5 @@
 <!--pages/rent/rent.wxml-->
 <button bindtap='selectRent'>筛选查询</button>
+
+
+<button bindtap='rentList'>列表</button>

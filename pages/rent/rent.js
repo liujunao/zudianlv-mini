@@ -30,6 +30,19 @@ Page({
     })
   },
 
+  rentList: function() {
+    wx.request({
+      url: app.serverUrl + '/user/rent/list?openId=' + app.getGlobalUserInfo().openId,
+      method: "POST",
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log(res.data)
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
