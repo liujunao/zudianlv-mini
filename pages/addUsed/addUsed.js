@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
   data: {
     note: '',  //二手车描述
@@ -12,23 +13,18 @@ Page({
   compliteClick() {
     let postDetail = {
       usedId: '',
-      openId: '',
-      nickName: 'Oka',
-      avatarUrl: '../../assert/icons/avater.jpg',
-      gender: 0, //man:0, woman:1
-      area: '韵苑',
-      areaNum: 16,
-      weixin: '',
-      usedImage: '../../assert/icons/mobile.png',
-      message: '毕业出车，五成新，用了两年；电瓶还比较好，充一次电可骑7,8个小时',
-      money: 1000,
-      createTime: '3小时前'
+      openId: app.getGlobalUserInfo().openId,
+      nickName: app.getGlobalUserInfo().nickName,
+      avatarUrl: app.getGlobalUserInfo().avatarUrl,
+      gender: app.getGlobalUserInfo().gender, //man:0, woman:1
+      area: app.getGlobalUserInfo().area,
+      areaNum: app.getGlobalUserInfo().areaNum,
+      weixin: app.getGlobalUserInfo().weixin,
+      usedImage: this.data.imageUrl,
+      message: this.data.note,
+      money: this.data.price,
+      createTime: '1分钟前'
     };
-    postDetail.message = this.data.note;
-    postDetail.money = this.data.price;
-    postDetail.usedImage = this.data.imageUrl;
-    postDetail.time = '1分钟前';
-    console.log("new postdetail", postDetail);
     wx.navigateTo({
       url: '../usedDetail/usedDetail?postDetail=' + JSON.stringify(postDetail) + '&type=1'
     })

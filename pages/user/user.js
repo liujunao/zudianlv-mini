@@ -295,6 +295,21 @@ Page({
       }
     })
   },
+  getMyRent(){
+    let data = { openId: app.getGlobalUserInfo().openId}
+    console.log("data:",data)
+    wx.request({
+      url: app.serverUrl + '/user/rent/list',
+      method: "POST",
+      data: data,
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log("我的出租：", res.data)
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载

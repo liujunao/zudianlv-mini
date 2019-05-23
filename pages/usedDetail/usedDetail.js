@@ -74,6 +74,11 @@ Page({
       }
     })
   },
+  modifyClick() {
+    wx.navigateTo({
+      url: '../addUsed/addUsed'
+    })
+  },
   rentClick() {
 
   }

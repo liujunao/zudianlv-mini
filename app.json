@@ -1,14 +1,14 @@
 {
   "pages": [
+    "pages/me/me",
     "pages/user/user",
+    "pages/rent/rent",
     "pages/addUsed/addUsed",
     "pages/usedDetail/usedDetail",
     "pages/wanted/wanted",
-    "pages/rent/rent",
     "pages/addWanted/addWanted",
     "pages/addRent/addRent",
     "pages/rentDetail/rentDetail",
-    "pages/me/me",
     "pages/meInfo/meInfo",
     "pages/index/index",
     "pages/filter/filter",

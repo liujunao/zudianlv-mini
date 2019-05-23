@@ -7,7 +7,7 @@ Page({
     womanUrl: '../../assert/icons/woman.png',
     collectIconSrc: '../../assert/icons/collect.png',
     postDetail: null,
-    type: '', //类型 '':联系Ta , 1:确认发布 
+    type: '', //类型 '':联系Ta , 1:确认发布 ,2:修改
   },
 
   onLoad: function(options) {
@@ -63,6 +63,11 @@ Page({
           },
         })
       }
+    })
+  },
+  modifyClick(){
+    wx.navigateTo({
+      url: '../addRent/addRent'
     })
   },
 

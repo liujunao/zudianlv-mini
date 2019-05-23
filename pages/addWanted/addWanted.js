@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
   data: {
     note: '',  //租车原因
@@ -15,29 +16,21 @@ Page({
   compliteClick() {
     //!完善帖子信息，准备发布  基本全局信息还未填写
     let postDetail = {
-      publishId: '',
-      openId: '',
-      nickName: 'Oka',
-      avatarUrl: '../../assert/icons/avater.jpg',
-      gender: 0, //man:0, woman:1
-      area: '韵苑',
-      areaNum: 16,
-      weixin: '',
-      message: '上午科技楼实验，求租一辆电动车，可载人;有人可载一程也行上午科技楼实验，求租一辆电动车，可载人',
-      money: 1,
-      yyyy: '2019-05-21', //求租年月日： yyyy-MM-dd
+      openId: app.getGlobalUserInfo().openId,
+      nickName: app.getGlobalUserInfo().nickName,
+      avatarUrl: app.getGlobalUserInfo().avatarUrl,
+      gender: app.getGlobalUserInfo().gender, //man:0, woman:1
+      area: app.getGlobalUserInfo().area,
+      areaNum: app.getGlobalUserInfo().areaNum,
+      weixin: app.getGlobalUserInfo().weixin,
+      message: this.data.note,
+      money: this.data.price,
+      yyyy: this.data.date, //求租年月日： yyyy-MM-dd
       week: '周一', //求租周几： 1->周一,2-->周二     ！！！需要写处理函数
-      beginTime: '8:00', //hh:mm
-      endTime: '12:00',
-      createTime: '3小时前'
+      beginTime: this.data.begin, //hh:mm
+      endTime: this.data.end,
+      createTime: '1分钟前'
     };
-    postDetail.message = this.data.note;
-    postDetail.yyyy = this.data.date;
-    postDetail.week = '周一';  //需要添加转换函数
-    postDetail.beginTime = this.data.begin;
-    postDetail.endTime = this.data.end;
-    postDetail.money = this.data.price;
-    postDetail.createTime = '1分钟前';
     console.log("new postdetail", postDetail);
     wx.navigateTo({
       url: '../wantedDetail/wantedDetail?postDetail=' + JSON.stringify(postDetail) + '&type=1'

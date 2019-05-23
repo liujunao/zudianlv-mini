@@ -9,8 +9,6 @@ Page({
     postDetail: null,
     type: '', //类型 '':联系Ta , 1:确认发布
   },
-
-
   onLoad: function(options) {
     let postDetail = JSON.parse(options.postDetail);
     this.setData({
@@ -40,7 +38,7 @@ Page({
       week: weekdayArray.indexOf(this.data.postDetail.week) + 1,
       beginTime: this.data.postDetail.beginTime,
       endTime: this.data.postDetail.endTime,
-      time:''  //未处理
+      time: '' //未处理
     }
     console.log("data: ", data)
     wx.request({
@@ -69,6 +67,11 @@ Page({
       }
     })
 
+  },
+  modifyClick() {
+    wx.navigateTo({
+      url: '../addWanted/addWanted'
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

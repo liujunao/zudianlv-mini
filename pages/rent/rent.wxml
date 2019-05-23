@@ -1,9 +1,9 @@
 <view class="container" style='min-height: 100%;;padding-bottom: 300rpx'>
-  <view class='flex-col-center fiter'>
+  <!-- <view class='flex-col-center fiter'>
     <view style='margin-top:50rpx'> 为您在需要时提供第一手的校园电动车闲置资料,</view>
     <view>不再怕耽误！</view>
     <button type='default' style='margin:70rpx 0; width:350rpx' bindtap='filterClick'>筛选</button>
-  </view>
+  </view> -->
 
 
   <view class='content' style='width:100%'>
@@ -55,4 +55,4 @@
   <image class='addIcon' src='../../assert/icons/add.png' bindtap='addClick'></image>
 </view>
 <!--pages/rent/rent.wxml-->
-<button bindtap='selectRent'>筛选查询</button>
+<!-- <button bindtap='selectRent'>筛选查询</button> -->

@@ -52,6 +52,6 @@
   </view>
 
   <button wx:if="{{type==1}}" class='confirm-btn' style="position:fixed; bottom:0;" bindtap='publishClick'>确认发布</button>
-  <!-- <button wx:else class='confirm-btn' style="position:fixed; bottom:0;" bindtap='contactClick'>联系Ta</button> -->
-  <button wx:else class='confirm-btn' style="position:fixed; bottom:0;" bindtap='publishClick'>联系Ta</button>
+  <button wx:if="{{type==2}}" class='confirm-btn' style="position:fixed; bottom:0;background-color:#8d8d8d" bindtap='modifyClick'>修改</button>
+  <button wx:if="{{!type}}" class='confirm-btn' style="position:fixed; bottom:0;" bindtap='contactClick'>联系Ta</button>
 </view>

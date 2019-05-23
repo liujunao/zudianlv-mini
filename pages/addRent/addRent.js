@@ -16,7 +16,6 @@ Page({
   compliteClick() { 
     //!完善帖子信息，准备发布  基本全局信息还未填写
     let userInfo = app.getGlobalUserInfo()
-    console.log(userInfo)
     let postDetail = {
       rentId: '',
       openId: userInfo.openId,
