@@ -17,9 +17,9 @@ Page({
       data: {
         area: "韵苑",
         areaNum: "",
-        week: [],
+        week: [1],
         manned: "",
-        gender: "1"
+        gender: ""
       },
       header: {
         'content-type': 'application/json' // 默认值
