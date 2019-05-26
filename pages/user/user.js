@@ -68,13 +68,13 @@ Page({
     var formObject = e.detail.value
     var that = this
 
-    console.log("money: ")
+    console.log("money: " + formObject.money)
 
     wx.request({
       url: app.serverUrl + '/user/rent/add',
       method: "POST",
       data: {
-        rent:{
+        rent: {
           openId: app.getGlobalUserInfo().openId,
           nickName: app.getGlobalUserInfo().nickName,
           gender: app.getGlobalUserInfo().gender,
@@ -87,7 +87,8 @@ Page({
           message: formObject.message,
           rent: formObject.rent,
           manned: formObject.manned,
-          carImage: that.data.carImage
+          carImage: that.data.carImage,
+          money: formObject.money
         },
         rentTime: [{
             week: "1",
@@ -108,6 +109,40 @@ Page({
         console.log(res)
         // var data = JSON.parse(res.data)
         // console.log(data)
+      }
+    })
+  },
+
+  //求租信息添加
+  addPublish: function(e) {
+    var formObject = e.detail.value
+    var that = this
+
+    console.log("money: " + formObject.money)
+
+    wx.request({
+      url: app.serverUrl + '/publish/add',
+      method: "POST",
+      data: {
+        openId: app.getGlobalUserInfo().openId,
+        nickName: app.getGlobalUserInfo().nickName,
+        gender: app.getGlobalUserInfo().gender,
+        avatarUrl: app.getGlobalUserInfo().avatarUrl,
+        area: app.getGlobalUserInfo().area,
+        areaNum: app.getGlobalUserInfo().areaNum,
+        weixin: app.getGlobalUserInfo().weixin,
+        message: formObject.message,
+        status: formObject.status,
+        money: formObject.money,
+        yyyy: "2019-05-26",
+        beginTime: "10:00",
+        endTime: "20:00"
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        console.log(res)
       }
     })
   },

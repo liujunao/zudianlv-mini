@@ -29,7 +29,7 @@ Page({
               if (res.data.openId == openId) { //用户信息未改变
                 //页面自动跳转到主页面
                 wx.reLaunch({
-                  url: '../rent/rent',
+                  url: '../user/user',
                 })
               }
             }
@@ -62,7 +62,7 @@ Page({
             }
             //页面自动跳转到主页面
             wx.reLaunch({
-              url: '../rent/rent',
+              url: '../user/user',
             })
           }
         })
