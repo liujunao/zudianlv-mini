@@ -6,3 +6,14 @@
   height: 240rpx;
   width: 360rpx;
 }
+.topBox {
+   padding:20rpx 40rpx;
+   background-color: #fff;
+   color: #2c2c2c;
+   font-size: 1em;
+}
+.addUsedIcon{
+  width: 47rpx;
+  height: 47rpx;
+  margin-right: 0rpx;
+}

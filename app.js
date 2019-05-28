@@ -16,5 +16,11 @@ App({
   globalData: {
     userInfo: null,
     mainColor: "#ff78ae", //！需要
+    rentPost:{},
+    wantedPost:{},
+    usedPost:{},
+    newPostAdded:false,
+    /* 收藏列表 */
+    collectList:[]
   }
 })

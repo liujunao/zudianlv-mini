@@ -1,18 +1,21 @@
 {
   "pages": [
-    "pages/me/me",
-    "pages/user/user",
     "pages/rent/rent",
-    "pages/addUsed/addUsed",
-    "pages/usedDetail/usedDetail",
-    "pages/wanted/wanted",
-    "pages/addWanted/addWanted",
-    "pages/addRent/addRent",
+    "pages/myCollect/myCollect",
+    "pages/user/user",
     "pages/rentDetail/rentDetail",
-    "pages/meInfo/meInfo",
-    "pages/index/index",
-    "pages/filter/filter",
+    "pages/myWanted/myWanted",
+    "pages/me/me",
+    "pages/wanted/wanted",
     "pages/used/used",
+    "pages/addUsed/addUsed",
+    "pages/addRent/addRent",
+    "pages/addWanted/addWanted", 
+    "pages/myUsed/myUsed",
+    "pages/myRent/myRent",
+    "pages/meInfo/meInfo",
+    "pages/usedDetail/usedDetail",
+    "pages/index/index",
     "pages/wantedDetail/wantedDetail"
   ],
   "window": {
@@ -22,25 +25,33 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color": "#fff",
+    "color": "#8d8d8d",
     "selectedColor": "#FFAAC1",
-    "backgroundColor": "#000000",
+    "backgroundColor": "#ffffff",
     "list": [
       {
         "pagePath": "pages/wanted/wanted",
-        "text": "租车"
+        "text": "租车",
+        "iconPath": "./assert/tabIcons/wanted1.png",
+        "selectedIconPath": "./assert/tabIcons/wanted2.png" 
       },
       {
         "pagePath": "pages/rent/rent",
-        "text": "出租"
+        "text": "出租",
+        "iconPath": "./assert/tabIcons/rent1.png",
+        "selectedIconPath": "./assert/tabIcons/rent2.png"
       },
       {
         "pagePath": "pages/used/used",
-        "text": "二手车"
+        "text": "二手车",
+        "iconPath": "./assert/tabIcons/used1.png",
+        "selectedIconPath": "./assert/tabIcons/used2.png"
       },
       {
         "pagePath": "pages/me/me",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "./assert/tabIcons/me1.png",
+        "selectedIconPath": "./assert/tabIcons/me2.png"
       }
     ]
   },

@@ -1,5 +1,5 @@
 <view class='itemBox'>
-  <view style='labelFont'>学院</view>
+  <view class='labelFont'>*学院</view>
   <picker bindchange="collegeChange" range="{{collegeArray}}">
     <view wx:if="{{college}}" class='text-font'>
       {{college}}
@@ -11,7 +11,7 @@
 </view>
 
 <view class='itemBox'>
-  <view style='labelFont'>年级</view>
+  <view class='labelFont'>*年级</view>
   <picker bindchange="gradeChange" range="{{gradeArray}}">
     <view wx:if="{{grade}}" class='text-font'>
       {{grade}}
@@ -23,7 +23,7 @@
 </view>
 
 <view class='itemBox'>
-  <view style='labelFont'>楼栋</view>
+  <view class='labelFont'>*楼栋</view>
   <picker mode="multiSelector" bindchange="bindMultiPickerChange" value="{{multiIndex}}" range="{{multiArray}}">
     <view wx:if="{{!apartment}}" class='unselected-font'>未选择</view>
     <view wx:else class='text-font'>{{apartment}}{{building}}栋</view>
@@ -31,9 +31,9 @@
 </view>
 
 
-<view class='itemBox' style='margin-top:40rpx'>
-  <view style='labelFont'>校园身份认证</view>
-  <view  wx:if="{{identified}}" class='flex-row-item-center'>
+<view class='itemBox'>
+  <view class='labelFont'>*校园身份认证</view>
+  <view wx:if="{{identified}}" class='flex-row-item-center'>
     <image src='{{passUrl}}' class='passIcon'></image>
     <view class='selectedFont'>已认证</view>
   </view>
@@ -48,6 +48,17 @@
   <view wx:if='{{imageUrl}}' class='unselected-font' style='margin-left:50rpx'>更换图片</view>
   <view wx:else class='unselected-font' style='margin-left:50rpx'>上传学生证照片</view>
 </view>
+
+<view class='itemBox' style='margin-top:40rpx'>
+  <view class='labelFont'>联系方式(微信)</view>
+
+  <input wx:if="{{!weixin || changeWeixin}}" bindinput="weixinInput" placeholder="{{placeholder}}" class='input-area' style='width:400rpx' placeholder-style="font-size:0.88em" />
+  <view wx:else class='text-font' bindtap='editWeixinClick'>{{weixin}}</view>
+
+
+</view>
+
+
 
 <button wx:if="{{!identified}}" class='confirm-btn' style='margin-top:100rpx' bindtap='submitClick'>上传个人信息</button>
 

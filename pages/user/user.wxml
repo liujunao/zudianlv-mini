@@ -17,8 +17,9 @@
 
   <image src='{{hustImage}}'></image>
 </view>
-<button type='primary'  bindtap='getMyRent'>我的出租</button>
 
- <button type='primary' bindtap="addUsedCarPic">发布二手车</button>
- <button type='primary' bindtap="getUsedListClick">二手车列表</button>
+<button type='primary'  bindtap='myCollect'>我的收藏</button>
+
+ <button type='primary' bindtap="rentCollect">收藏出租贴</button>
+ <button type='primary' bindtap="getRentListClick">出租列表</button>
  

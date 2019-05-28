@@ -1,0 +1,37 @@
+<view style='margin:60rpx 30rpx'>
+  <view class='flex-row-item-center'>
+    <image class='circle-image' src='{{postDetail.carImage}}'></image>
+    <view class='flex-col'>
+      <view class='text-ellipsis messageFont' style='width:520rpx'>{{postDetail.message}}</view>
+      <view class='flex-row-item-center' style='margin:20rpx 0 0rpx 0rpx;'>
+        <view class='radius-border-label' style='margin-right:15rpx'>出租时段</view>
+        <view class='black-time-font'>{{postDetail.rentTime}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class='flex-row-SpcBwn' style='margin:30rpx 0 120rpx 0'>
+
+    <view wx:if="{{postDetail.rent==1}}" class='flex-row-item-center'>
+      <image src='{{passUrl}}' class='passIcon'></image>
+      <view class='publish-font'>已发布</view>
+    </view>
+    <view wx:if="{{postDetail.rent==2}}" class='unpublished-font'>未发布</view>
+
+
+    <view class='flex-row'>
+      <view class='time-font' style='margin-right:20rpx'>{{postDetail.count || 0}}人查看</view>
+      <view class='time-font'>{{postDetail.time}}发布</view>
+    </view>
+  </view>
+
+
+  <view class='flex-row-SpcBwn'>
+    <view></view>
+    <view class='flex-row-item-center'>
+      <button wx:if="{{postDetail.rent==1}}" class='me-btn' style="margin-right:20rpx;" bindtap='deleteClick'>撤回发布</button>
+       <button wx:if="{{postDetail.rent==2}}" class='me-btn' style="margin-right:20rpx;" bindtap='rePubClick'>重新发布</button>
+      <button class='me-btn' bindtap='checkClick'>查看</button>
+    </view>
+  </view>
+</view>

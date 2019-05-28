@@ -99,7 +99,7 @@ page {
 }
 .black-label-font {
   color: #000;
-  font-size: 0.8em;
+  font-size: 0.85em;
   font-weight: bolder;
 }
 
@@ -109,7 +109,7 @@ page {
 }
 .black-normal-font {
   color: #000;
-  font-size: 0.8em;
+  font-size: 0.88em;
 }
 .main-large-font {
   color: var(--mainColor);
@@ -121,6 +121,11 @@ page {
 }
 .text-font {
   color: #000;
+  /* color: #2c2c2c; */
+  font-size: var(--textFontSize);
+}
+.text-label {
+   color: #2c2c2c;
   font-size: var(--textFontSize);
 }
 
@@ -129,11 +134,6 @@ page {
 .type-font {
   color: var(--mainColor);
   font-size: 0.6em;
-}
-
-.message-font {
-  color: #4C4C4C;
-  font-size: 0.78em;
 }
 
 .time-font {
@@ -146,15 +146,56 @@ page {
   font-size: var(--textFontSize);
 }
 
-
-
-
-
-
-.lightGrayLabelFont {
-  color: #8d8d8d;
-  font-size: 0.75em;
+.collect-icon{
+  width:60rpx;
+  height: 60rpx;
+  margin-right: 5rpx;
 }
+.collect-font{
+  font-size: 1em;
+  color: #000;
+}
+
+
+
+
+/* 帖子展示 */
+.message-font {
+  color: #4C4C4C;
+  font-size: 0.92em;
+}
+.black-time-font{
+color: #000;
+  font-size: 0.95em;
+}
+.radius-border-label{
+   color: #8d8d8d;
+  font-size: 0.8em;
+  padding: 8rpx 6rpx;
+  line-height: 1em;
+  border-radius: 3em;
+  border: 1rpx solid #eeeeee;
+}
+.post-bottom-box{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1rpx solid #eeeeee;
+  margin-top:20rpx; 
+  padding-top:5rpx;
+  position:relative;
+}
+
+.zero-post-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #fff;
+  padding: 40rpx 0;
+  color: #8d8d8d;
+}
+
 
 .noteFont {
   font-size: 0.85em;
@@ -193,12 +234,33 @@ page {
 
 .car-image {
   background-color: var(--bgColor);
-  height: 230rpx;
-  width: 345rpx;
+  height: 330rpx;
+  width: 440rpx;
+}
+
+/* 我的 */
+.circle-image {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+  margin-right:30rpx;
+}
+.publish-font {
+  font-size: 1.1em;
+  color: #51c332;
+}
+.unpublished-font{
+  font-size: 1.1em;
+  color: #4C4C4C;
 }
 
 /*框*/
-
+.input-area {
+  width: 560rpx;
+  font-size: var(--textFontSize);
+  color: #000;
+  margin-top: 10rpx;
+}
 .text-area {
   width: 580rpx;
   font-size: var(--textFontSize);
@@ -219,39 +281,6 @@ page {
 
 
 
-
-.noteText {
-  width: 560rpx;
-  height: 210rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.copyTextBox {
-  /* 复制微信号框 */
-  border: 1px solid #17b978;
-  color: #17b978;
-  font-size: 0.75em;
-  padding: 0 32rpx;
-}
-
-.spaceNowrap {
-  white-space: nowrap;
-}
-
-.updateTime {
-  position: absolute;
-  right: 40rpx;
-  bottom: 10rpx;
-  color: #bdbdbd;
-  font-size: 0.6em;
-}
-
-.locationText {
-  color: #bdbdbd;
-  font-size: 0.6em;
-}
-
 /* 按钮 */
 
 .confirm-btn {
@@ -260,6 +289,13 @@ page {
   margin: 5% 5%;
   color: #fff;
   z-index: 2;
+}
+
+.me-btn{
+   background-color: var(--mainColor);
+    color: #fff;
+    padding: 0 30rpx;
+    line-height: 2em;
 }
 
 /* 发布 */

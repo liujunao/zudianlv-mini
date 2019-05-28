@@ -13,7 +13,25 @@ Page({
     building: null,
     multiArray: [["韵苑公寓", "紫菘公寓", "沁苑公寓"], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]],
     multiIndex: [0, 0, 0],
-    imageUrl: ''
+    imageUrl: '',
+    weixin: '',
+    changeWeixin: false,
+    placeholder:"(可在需要发布时填写)"
+  },
+  weixinInput(e) {
+    console.log(e.detail.value);
+    this.setData({
+      changeWeixin: true,
+      weixin: e.detail.value,
+      ischanging: true
+    })
+  },
+  editWeixinClick(){
+    this.setData({
+      changeWeixin:true,
+      ischanging:true,
+      placeholder: this.data.weixin
+    })
   },
   onLoad(options) {
     if(app.getGlobalUserInfo().hustImage){
@@ -23,7 +41,8 @@ Page({
         college:app.getGlobalUserInfo().college,
         grade: app.getGlobalUserInfo().grade,
         apartment:app.getGlobalUserInfo().area,
-        building:app.getGlobalUserInfo().areaNum
+        building:app.getGlobalUserInfo().areaNum,
+        weixin:app.getGlobalUserInfo().weixin
       })
     }
   },
@@ -73,7 +92,7 @@ Page({
             grade: that.data.grade,
             area: that.data.apartment,
             areaNum: that.data.building,
-            weixin: '' //不应强行填写发布时进行提醒填写
+            weixin: that.data.weixin
           },
           header: {
             'content-type': 'application/json' // 默认值
@@ -85,6 +104,7 @@ Page({
             }
             that.setData({
               ischanging: false,
+              changeWeixin:false
             })
             console.log("update success")
             wx.showToast({
@@ -134,7 +154,8 @@ Page({
             that.setData({
               identified: true,
               openIdentify: false,
-              ischanging: false
+              ischanging: false,
+              changeWeixin: false
             })
             wx.hideLoading()
             

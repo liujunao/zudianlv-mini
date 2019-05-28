@@ -1,51 +1,60 @@
 <view class="container" style='min-height: 100%;;padding-bottom: 300rpx'>
-  <!-- <view class='flex-col-center fiter'>
-    <view style='margin-top:50rpx'> 为您在需要时提供第一手的校园电动车闲置资料,</view>
-    <view>不再怕耽误！</view>
-    <button type='default' style='margin:70rpx 0; width:350rpx' bindtap='filterClick'>筛选</button>
-  </view> -->
-
-
   <view class='content' style='width:100%'>
-    <view class='bg-white pullDown'>
-      <view>附近</view>
+    <view class='flex-row-SpcBwn bg-white'>
+      <view></view>
+      <view wx:if="{{!newest}}" class='bg-white flex-row-item-center pullDown' bindtap='switchToNeibor'>
+        <image src='{{switchUrl}}' class='switchIcon'></image>
+        <view>切换到附近</view>
+      </view>
+
+      <view wx:else class='bg-white flex-row-item-center pullDown' bindtap='switchToNewest'>
+        <image src='{{switchUrl}}' class='switchIcon'></image>
+        <view>切换到最新</view>
+      </view>
     </view>
 
+    <view wx:if="{{posts.length===0}}" class='zero-post-box'>{{reminder}}</view>
     <block wx:for="{{posts}}" wx:key="item">
       <view class='post-box' data-postdetail='{{item}}' bindtap='postClick'>
         <view class='flex-row-SpcBwn'>
           <view class='flex-row-item-center'>
             <image class='avater-image' src='{{item.avatarUrl}}'></image>
             <view class='flex-col'>
-              <image wx:if="{{item.gender==0}}" class='gender-icon' src='{{manUrl}}'></image>
-              <image wx:else class='gender-icon' src='{{womanUrl}}'></image>
+              <!-- <image wx:if="{{item.gender==0}}" class='gender-icon' src='{{manUrl}}'></image>
+              <image wx:else class='gender-icon' src='{{womanUrl}}'></image> -->
+              <view class='black-normal-font'>{{item.nickName}}</view>
               <view class='type-font'>#出租</view>
             </view>
           </view>
+
+          <view class='main-label-font'>{{item.money}}￥</view>
+        </view>
+
+        <view style='margin:15rpx 0 15rpx 60rpx'>
+          <image mode='aspectFit' class='car-image' src='{{item.carImage}}'></image>
+        </view>
+
+        <view class='message-font' style='margin:0rpx 0 0rpx 60rpx;'>{{item.message}}</view>
+
+        <view class='flex-row-item-center' style='margin:20rpx 0 0rpx 0rpx;'>
+          <view class='radius-border-label' style='margin-right:15rpx'>出租时段</view>
+          <view class='black-time-font'>{{item.rentTime}}</view>
+        </view>
+
+        <view class='post-bottom-box'>
           <view class='flex-row-item-center'>
             <image src='{{orientedUrl}}' style='width:25rpx;height:25rpx;margin-right:4rpx'></image>
             <view class='main-normal-font'>{{item.area}}{{item.areaNum}}栋</view>
           </view>
-        </view>
-
-        <view class='flex-row-SpcBwn' style='margin:15rpx 0 15rpx 60rpx'>
-          <image mode='aspectFit' class='car-image' src='{{item.carImage}}'></image>
-          <view class='flex-col' style='height:230rpx'>
-            <view wx:for='{{item.rentTime}}' wx:for-index="index" wx:if="{{index<4}}" class='black-label-font' style="margin-bottom:10rpx">
-              {{item.week}} {{item.beginTime}}-{{item.endTime}}
+          <!-- <view class='time-font flex-row-item-center' style='position:absolute;right:0;bottom:0rpx'>
+            <view style='margin-right:20rpx'>{{item.count}}人查看</view>
+            <view>
+              {{item.time}}发布
             </view>
-            <view wx:if="{{item.rentTime.length>4}}">...</view>
+          </view> -->
+           <view class='time-font' style='position:absolute;right:0;bottom:0rpx'>
+              {{item.time}}发布
           </view>
-        </view>
-
-        <view class='flex-row-item-center' style='margin:0rpx 0 0rpx 60rpx; position:relative'>
-          <view style='margin-right:30rpx;' class='black-normal-font'>
-            <text wx:if='{{item.manned==0}}'>大车型</text>
-            <text wx:if='{{item.manned==1}}'>小车型</text>
-          </view>
-
-          <view class='text-ellipsis message-font' style='width:250rpx'>{{item.message}}</view>
-          <view class='time-font' style='position:absolute;right:0;bottom:0'>{{item.time}}更新</view>
         </view>
 
       </view>
@@ -54,5 +63,3 @@
 
   <image class='addIcon' src='../../assert/icons/add.png' bindtap='addClick'></image>
 </view>
-<!--pages/rent/rent.wxml-->
-<!-- <button bindtap='selectRent'>筛选查询</button> -->

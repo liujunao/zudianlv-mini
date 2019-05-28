@@ -5,34 +5,28 @@
 
   <view class='detail-box'>
 
-    <view class='flex-col  box-btm-border' style='padding-bottom:15rpx;margin-bottom:20rpx'>
-      <view class='black-label-font' style='margin-bottom:15rpx'>空闲时段</view>
-      <view class='flex-row-wrap' style='width:550rpx'>
-        <view wx:for='{{postDetail.rentTime}}' class='black-normal-font' style='margin:0 30rpx 15rpx 0'>
-          {{item.week}} {{item.beginTime}}-{{item.endTime}}
-        </view>
+    <view class='flex-col' style='padding-bottom:0rpx;margin-bottom:10rpx'>
+      <view class='black-label-font' style='margin-bottom:15rpx'>出租时段</view>
+      <view class='black-normal-font'>
+        <text wx:if='{{timeString}}'>{{timeString}}</text>
+        <text wx:else>{{postDetail.rentTime}}</text>
       </view>
     </view>
 
-    <view class='flex-row' style='position:relative'>
-
+    <view class='post-bottom-box'>
       <view class='flex-row-item-center'>
         <image src='{{orientedUrl}}' style='width:25rpx;height:25rpx;margin-right:4rpx'></image>
         <view class='main-normal-font'>{{postDetail.area}}{{postDetail.areaNum}}栋</view>
       </view>
-
-      <view class='time-font' style='position:absolute;right:0;bottom:0'>
-        <text wx:if="{{postDetail.time}}">{{postDetail.time}}</text>
-        <text wx:else>1分钟前</text>
-        更新
-      </view>
+      <view class='time-font' style='position:absolute;right:0;bottom:0'>{{postDetail.time}}发布</view>
     </view>
+
   </view>
 
   <view class='detail-box'>
     <view class='flex-row-SpcBwn'>
-      <view class='black-label-font'>意愿价格</view>
-      <view class='black-normal-font'>{{postDetail.money}}￥/h</view>
+      <view class='black-label-font'>租金</view>
+      <view class='black-normal-font'>{{postDetail.money}}￥</view>
     </view>
   </view>
 
@@ -51,7 +45,23 @@
     </view>
   </view>
 
+  <view class='detail-box'>
+    <view class='flex-row-SpcBwn'>
+      <view></view>
+      <view wx:if="{{!collected}}" class='flex-row-item-center' bindtap='collectClick'>
+        <image src='../../assert/icons/collect.png' class='collect-icon'></image>
+        <view class='collect-font'>收藏此贴</view>
+      </view>
+
+      <view wx:else class='flex-row-item-center' bindtap='collectClick'>
+        <image src='../../assert/icons/collected.png' class='collect-icon'></image>
+        <view class='collect-font'>已收藏</view>
+      </view>
+
+    </view>
+  </view>
+
   <button wx:if="{{type==1}}" class='confirm-btn' style="position:fixed; bottom:0;" bindtap='publishClick'>确认发布</button>
-  <button wx:if="{{type==2}}" class='confirm-btn' style="position:fixed; bottom:0;background-color:#8d8d8d" bindtap='modifyClick'>修改</button>
+  <button wx:if="{{type==2}}" class='confirm-btn' style="position:fixed; bottom:0" bindtap='modifyClick'>修改</button>
   <button wx:if="{{!type}}" class='confirm-btn' style="position:fixed; bottom:0;" bindtap='contactClick'>联系Ta</button>
 </view>

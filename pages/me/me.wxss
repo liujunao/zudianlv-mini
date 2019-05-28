@@ -34,7 +34,7 @@
 
 .labelFont {
   font-size: 1em;
-  color: #000;
+ color: #2c2c2c;
 }
 
 .getUserInfo {

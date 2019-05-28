@@ -1,65 +1,44 @@
 const app = getApp()
+var utils = require('../../utils/util.js')
 Page({
   data: {
+    switchUrl: '../../assert/icons/switch.png',
     orientedUrl: '../../assert/icons/oriented.png',
     manUrl: '../../assert/icons/man.png',
     womanUrl: '../../assert/icons/woman.png',
     posts:[],
-    // posts:[
-    //   {
-    //     publishId: '',
-    //     openId: '',
-    //     nickName: 'Oka',
-    //     avatarUrl: '../../assert/icons/avater.jpg',
-    //     gender: 0, //man:0, woman:1
-    //     area: '韵苑',
-    //     areaNum: 16,
-    //     weixin: '',
-    //     message: '上午科技楼实验，求租一辆电动车，可载人;有人可载一程也行上午科技楼实验，求租一辆电动车，可载人',
-    //     money: 1,
-    //     yyyy:'2019-05-21', //求租年月日： yyyy-MM-dd
-    //      week: '周一', //求租周几： 1->周一,2-->周二     ！！！需要写处理函数
-    //     beginTime: '8:00', //hh:mm
-    //     endTime: '12:00',
-    //     createTime: '3小时前'
-    //   }, {
-    //     publishId: '',
-    //     openId: '',
-    //     nickName: 'Oka',
-    //     avatarUrl: '../../assert/icons/avater.jpg',
-    //     gender: 0, //man:0, woman:1
-    //     area: '韵苑',
-    //     areaNum: 16,
-    //     weixin: '',
-    //     message: '上午科技楼实验，求租一辆电动车，可载人;有人可载一程也行上午科技楼实验，求租一辆电动车，可载人',
-    //     money: 1,
-    //     yyyy: '2019-05-21', //求租年月日： yyyy-MM-dd
-    //     week: '周一', //求租周几： 1->周一,2-->周二     ！！！需要写处理函数
-    //     beginTime: '8:00', //hh:mm
-    //     endTime: '12:00',
-    //     createTime: '3小时前'
-    //   }, {
-    //     publishId: '',
-    //     openId: '',
-    //     nickName: 'Oka',
-    //     avatarUrl: '../../assert/icons/avater.jpg',
-    //     gender: 0, //man:0, woman:1
-    //     area: '韵苑',
-    //     areaNum: 16,
-    //     weixin: '',
-    //     message: '上午科技楼实验，求租一辆电动车，可载人;有人可载一程也行上午科技楼实验，求租一辆电动车，可载人',
-    //     money: 1,
-    //     yyyy: '2019-05-21', //求租年月日： yyyy-MM-dd
-    //     week: '周一', //求租周几： 1->周一,2-->周二     ！！！需要写处理函数
-    //     beginTime: '8:00', //hh:mm
-    //     endTime: '12:00',
-    //     createTime: '3小时前'
-    //   }, 
-    // ]
+    neiborPosts:[],
+    newestPosts:[],
+    reminder: '',
+    newest:false
   },
-
+  onShow() {
+    console.log(" rent onshow")
+    console.log("new post", app.globalData.wantedPost)
+    console.log("new post", app.globalData.newPostAdded)
+    console.log("old posts", this.data.posts)
+    if (app.globalData.newPostAdded) {
+      app.globalData.newPostAdded = false
+      let newPost = app.globalData.wantedPost
+      let time = newPost.yyyy.split('-')
+      let mon = String(parseInt(time[1]));
+      let day = String(parseInt(time[2]));
+      newPost.timeString = mon + '月' + day + '日' + ' ' + newPost.beginTime + '-' + newPost.endTime;
+      newPost.createTime = utils.getStringTime(newPost.createTime);
+      
+      let posts = this.data.posts
+      posts.unshift(newPost)
+      this.setData({
+        posts: posts,
+        newestPosts: posts
+      })
+    }
+  },
   onLoad: function () {
     var that = this
+    wx.showLoading({
+      title: '正在加载',
+    })
     wx.request({
       url: app.serverUrl + '/publish/list',
       method: "POST",
@@ -68,34 +47,85 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
+        wx.hideLoading()
         console.log("租车列表：", res.data)
+        console.log("new list", utils.formatWantedPostList(res.data))
         that.setData({
-          posts: res.data
+          posts: utils.formatWantedPostList(res.data),
+          newestPosts: utils.formatWantedPostList(res.data)
         })
+        if (res.data.length === 0) {
+         that.setData({
+           reminder: '最近没有用户发布租车需求哦~~'
+         })
+        }
       }
     })
 
   },
-  getPublishListClick() {
-    wx.request({
-      url: app.serverUrl + '/publish/list',
-      method: "POST",
-      data: {},
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log("租车列表：", res.data)
-        that.setData({
-          posts:res.data
-        })
+  /* 切换到附近 */
+  switchToNeibor(){
+    wx.showNavigationBarLoading();
+    setTimeout(function () {
+      wx.hideNavigationBarLoading()
+    }, 500)
+    let posts = this.data.posts;
+    let area = app.getGlobalUserInfo().area;
+    let areaNum = app.getGlobalUserInfo().areaNum;
+    let neiborPosts = [];
+    /* 先添加同一公寓同一楼栋信息 */
+    for (let i = 0; i < posts.length; i++) {
+      if (posts[i].area == area && posts[i].areaNum == areaNum) {
+        neiborPosts.push(posts[i])
       }
+    }
+    /* 再添加同一公寓不同楼栋信息 */
+    for (let i = 0; i < posts.length; i++) {
+      if (posts[i].area == area && posts[i].areaNum != areaNum) {
+        neiborPosts.push(posts[i])
+      }
+    }
+    console.log("附近的",neiborPosts)
+    this.setData({
+      posts: neiborPosts,
+      newest:true,
+      reminder: area + '暂没有用户发布租车需求哦~'
     })
   },
+  /* 切换到最新 */
+  switchToNewest(){
+    wx.showNavigationBarLoading();
+    setTimeout(function () {
+      wx.hideNavigationBarLoading()
+    }, 500)
+    console.log("切换到最新：",this.data.newestPosts)
+    this.setData({
+      posts: this.data.newestPosts,
+      newest: false,
+      reminder: '最近没有用户发布租车需求哦~~'
+    })
+    
+  },
+  
   postClick(e) {
     let postDetail = e.currentTarget.dataset.postdetail;
     wx.navigateTo({
       url: '../wantedDetail/wantedDetail?postDetail=' + JSON.stringify(postDetail)
+    })
+
+    /* 修改浏览次数 */
+    console.log("点击：", postDetail)
+    let count = postDetail.count || 0;
+    count = parseInt(count) + 1;
+    wx.request({
+      url: app.serverUrl + '/publish/count?publishId=' + postDetail.publishId + '&count=' + count,
+      method: "POST",
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log("修改count", res)
+      }
     })
   },
   addClick() {

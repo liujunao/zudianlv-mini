@@ -32,23 +32,27 @@
 
   </view>
   <view class='itemBox' bindtap='myWantedClick'>
-    <view style='labelFont'>我的租车</view>
+    <view class='labelFont'>我的租车</view>
     <image src='{{nextUrl}}' class='nextIcon'></image>
   </view>
   <view class='itemBox' bindtap='myRentClick'>
-    <view style='labelFont'>我的出租</view>
+    <view class='labelFont'>我的出租</view>
     <image src='{{nextUrl}}' class='nextIcon'></image>
   </view>
   <view class='itemBox' bindtap='myUsedClick'>
-    <view style='labelFont'>我的二手车</view>
+    <view class='labelFont'>我的二手车</view>
+    <image src='{{nextUrl}}' class='nextIcon'></image>
+  </view>
+  <view class='itemBox' bindtap='myCollectClick'>
+    <view class='labelFont'>我的收藏</view>
     <image src='{{nextUrl}}' class='nextIcon'></image>
   </view>
   <view class='itemBox'>
-    <view style='labelFont'>租赁须知</view>
+    <view class='labelFont'>租赁须知</view>
     <image src='{{nextUrl}}' class='nextIcon'></image>
   </view>
   <view class='itemBox'>
-    <view style='labelFont'>联系我们</view>
+    <view class='labelFont'>联系我们</view>
     <image src='{{nextUrl}}' class='nextIcon'></image>
   </view>
 </view>

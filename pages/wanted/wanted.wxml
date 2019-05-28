@@ -1,25 +1,47 @@
 <view class="container" style='min-height: 100%;;padding-bottom: 300rpx'>
 
+  <view class='flex-row-SpcBwn bg-white'>
+    <view></view>
+    <view  wx:if="{{!newest}}" class='bg-white flex-row-item-center pullDown' bindtap='switchToNeibor'>
+      <image src='{{switchUrl}}' class='switchIcon'></image>
+      <view>切换到附近</view>
+    </view>
+
+     <view wx:else class='bg-white flex-row-item-center pullDown' bindtap='switchToNewest'>
+      <image src='{{switchUrl}}' class='switchIcon'></image>
+      <view>切换到最新</view>
+    </view>
+  </view>
+
+
+  <view wx:if="{{posts.length===0}}" class='zero-post-box'>{{reminder}}</view>
+
   <block wx:for="{{posts}}" wx:key="item">
     <view class='post-box' data-postdetail='{{item}}' bindtap='postClick'>
       <view class='flex-row-SpcBwn'>
         <view class='flex-row-item-center'>
           <image class='avater-image' src='{{item.avatarUrl}}'></image>
           <view class='flex-col'>
-            <image wx:if="{{item.gender==0}}" class='gender-icon' src='{{manUrl}}'></image>
-            <image wx:else class='gender-icon' src='{{womanUrl}}'></image>
+            <!-- <image wx:if="{{item.gender==0}}" class='gender-icon' src='{{manUrl}}'></image>
+            <image wx:else class='gender-icon' src='{{womanUrl}}'></image> -->
+            <view class='black-normal-font'>{{item.nickName}}</view>
             <view class='type-font'>#租车</view>
           </view>
         </view>
+        <view class='main-label-font'>{{item.money}}￥</view>
       </view>
 
-      <view class='black-bigger-font' style='margin:15rpx 0 15rpx 60rpx'>
+      <view class='message-font' style='margin:15rpx 0 15rpx 60rpx'>
         <view style='padding:0 40rpx 20rpx 0'>{{item.message}}</view>
       </view>
 
-      <view class='main-label-font' style='margin:0rpx 0 15rpx 60rpx'>{{item.yyyy}} {{item.week}} {{item.beginTime}}-{{item.endTime}}</view>
+      <view class='flex-row-item-center' style='margin:20rpx 0 0rpx 0rpx;'>
+        <view class='radius-border-label' style='margin-right:15rpx'>租车时段</view>
+        <view class='black-time-font'>{{item.timeString}}</view>
+      </view>
+      <!-- <view class='main-label-font' style='margin:0rpx 0 15rpx 60rpx'>{{item.yyyy}} {{item.week}} {{item.beginTime}}-{{item.endTime}}</view> -->
 
-      <view class='flex-row' style='margin:0rpx 0 0rpx 60rpx; position:relative'>
+      <view class='post-bottom-box'>
         <view class='flex-row-item-center'>
           <image src='{{orientedUrl}}' style='width:25rpx;height:25rpx;margin-right:4rpx'></image>
           <view class='main-normal-font'>{{item.area}}{{item.areaNum}}栋</view>

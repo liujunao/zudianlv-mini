@@ -1,0 +1,16 @@
+.itemBox {
+  padding: 30rpx 30rpx;
+  margin: 40rpx 0;
+  border-bottom: 1rpx solid #eeeeee;
+}
+
+.circleImage{
+  width: 100rpx;
+  height:100rpx;
+  border-radius: 50%;
+  margin-right:25rpx;
+}
+
+.checkFont {
+  color: var(--mainColor);
+}

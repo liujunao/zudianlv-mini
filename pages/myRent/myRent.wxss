@@ -1,0 +1,10 @@
+/* pages/myRent/myRent.wxss */
+.messageFont {
+  font-size: 0.9em;
+  color: #2c2c2c;
+}
+
+.passIcon {
+  width: 40rpx;
+  height: 40rpx;
+}

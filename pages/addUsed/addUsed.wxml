@@ -8,13 +8,13 @@
     <view wx:else class='unselected-font' style='margin-left:50rpx'>添加电动车照片</view>
   </view>
   <view class='detail-box flex-row'>
-    <view class='text-font'>描述：</view>
+    <view class='text-label'>描述：</view>
     <textarea maxlength='100' placeholder='添加二手车描述信息，不超过100字哦~' bindinput='noteInput' class='text-area'></textarea>
   </view>
 
   <view class='detail-box'>
     <view class='flex-row-SpcBwn'>
-      <view class='text-font'>价格</view>
+      <view class='text-label'>价格</view>
       <picker bindchange="priceChange" start='1000' value='6' range="{{priceArray}}">
         <view wx:if="{{price}}" class='text-font'>
           {{price}}￥
@@ -23,6 +23,13 @@
           1000￥
         </view>
       </picker>
+    </view>
+  </view>
+
+    <view wx:if="{{!weixin || changeWeixin}}" class='detail-box'>
+    <view class='flex-row-item-center'>
+      <view class='text-font' style='margin-right:40rpx'>微信</view>
+      <input bindinput="weixinInput" placeholder="填写微信号后其他同学可方便联系你哦~" class='input-area' placeholder-style="font-size:0.88em" />
     </view>
   </view>
   <button class='confirm-btn' style="position:fixed; bottom:0;" bindtap='compliteClick'>完成</button>

@@ -1,7 +1,14 @@
-.pullDown {
-  padding:10rpx 0 0 40rpx;
-  font-size: 0.75em;
-  color: #8d8d8d;
+.container {
+  padding-top:2rpx;
 }
-
+.pullDown {
+  padding:10rpx 40rpx 25rpx 40rpx;
+  font-size: 0.9em;
+  color: #2c2c2c;
+}
+.switchIcon {
+  width: 34rpx;
+  height: 34rpx;
+  margin-right: 7rpx;
+}
 

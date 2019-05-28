@@ -1,13 +1,13 @@
 <view class="container" style='padding-bottom: 500rpx'>
   <view class='detail-box flex-row'>
-    <view class='text-font'>租车原因：</view>
+    <view class='text-label'>租车原因：</view>
     <textarea maxlength='100' placeholder='补充电动车描述或添加其他出租需求，不超过100字哦~' bindinput='noteInput' class='text-area' style='width:500rpx'></textarea>
   </view>
 
   <view class='detail-box flex-col'>
-    <view class='text-font' style='margin-bottom:20rpx'>租车时段：</view>
+    <view class='text-label' style='margin-bottom:30rpx'>租车时段：</view>
 
-    <picker mode="date" bindchange="pickDateChange" style='margin-bottom:20rpx'>
+    <picker mode="date" bindchange="pickDateChange" style='margin-bottom:30rpx'>
       <view wx:if="{{date}}" class='text-font'>
         {{date}}
       </view>
@@ -25,7 +25,7 @@
           起始时间
         </view>
       </picker>
-      <view style='margin:0 30rpx'>-</view>
+      <view style='margin:0 50rpx'>-</view>
       <picker mode="time" bindchange="pickEndChange">
         <view wx:if="{{end}}" class='text-font'>
           {{end}}
@@ -39,15 +39,22 @@
 
   <view class='detail-box'>
     <view class='flex-row-SpcBwn'>
-      <view class='text-font'>租金</view>
+      <view class='text-label'>租金</view>
       <picker bindchange="priceChange" range="{{priceArray}}">
         <view wx:if="{{price}}" class='text-font'>
-          {{price}}￥/h
+          {{price}}￥
         </view>
         <view wx:else class='unselected-font'>
-          0￥/h
+          0￥
         </view>
       </picker>
+    </view>
+  </view>
+
+  <view wx:if="{{!weixin || changeWeixin}}" class='detail-box'>
+    <view class='flex-row-item-center'>
+      <view class='text-font' style='margin-right:40rpx'>微信</view>
+      <input bindinput="weixinInput" placeholder="填写微信号后其他同学可方便联系你哦~" class='input-area' placeholder-style="font-size:0.88em" />
     </view>
   </view>
 

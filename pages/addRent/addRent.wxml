@@ -10,70 +10,57 @@
     <view wx:else class='unselected-font' style='margin-left:50rpx'>添加电动车照片</view>
   </view>
 
-  <view class='detail-box flex-row'>
-    <view class='text-font' style='margin-right:10rpx'>电动车车型：</view>
-    <view wx:if='{{carType==0}}' class='selected-box text-font' style='margin-right:40rpx' data-type='0' bindtap='carTyepClick'>小车型</view>
-    <view wx:else class='unselected-box text-font' style='margin-right:40rpx' data-type='0' bindtap='carTyepClick'>小车型</view>
-
-    <view wx:if='{{carType==1}}' class='selected-box text-font' data-type='1' bindtap='carTyepClick'>大车型</view>
-    <view wx:else class='unselected-box text-font' data-type='1' bindtap='carTyepClick'>大车型</view>
-  </view>
-
-  <!-- 添加空闲时段 -->
   <view class='detail-box'>
-    <view class='flex-row-SpcBwn'>
-      <view class='text-font'>空闲时段</view>
-      <picker bindchange="freeTimeChange" range="{{weekdayArray}}">
-        <view class='mainLabelFontLight' style='font-size:0.9em'>添加</view>
-      </picker>
-    </view>
+    <view class='text-label' style='margin-bottom:30rpx'>出租时段</view>
 
-    <view wx:for='{{rentTime}}' wx:for-index="index" class='flex-row-SpcBwn'>
-      <view class='flex-row-item-center'>
-        <image src='../../assert/icons/sub2.png' class='subIcon' data-index='{{index}}' bindtap='deleteTime'></image>
-        <view>{{item.week}}</view>
-      </view>
-
-      <view class='flex-row-item-center'>
-        <picker mode="time" data-index='{{index}}' bindchange="pickBeginChange" style='margin-right:30rpx'>
-          <view wx:if="{{item.beginTime}}" class='noteFont'>
-            {{item.beginTime}}
-          </view>
-          <view wx:else class='unselected-font'>
-            起始时间
-          </view>
-        </picker>
-
-        <picker mode="time" data-index='{{index}}' bindchange="pickEndChange">
-          <view wx:if="{{item.endTime}}" class='noteFont'>
-            {{item.endTime}}
-          </view>
-          <view wx:else class='unselected-font'>
-            结束时间
-          </view>
-        </picker>
-      </view>
-    </view>
-  </view>
-
-
-  <view class='detail-box'>
-    <view class='flex-row-SpcBwn'>
-      <view class='text-font'>租金</view>
-      <picker bindchange="priceChange" range="{{priceArray}}">
-        <view wx:if="{{price}}" class='text-font'>
-          {{price}}￥/h
+    <view class='flex-row-item-center'>
+      <picker mode="date" bindchange="pickBeginDateChange">
+        <view wx:if="{{beginDate}}" class='text-font'>
+          {{beginDate}}
         </view>
         <view wx:else class='unselected-font'>
-          0￥/h
+          起始日期
+        </view>
+      </picker>
+      <view style='margin:0 50rpx'>-</view>
+      <picker mode="date" bindchange="pickEndDateChange">
+        <view wx:if="{{endDate}}" class='text-font'>
+          {{endDate}}
+        </view>
+        <view wx:else class='unselected-font'>
+          结束日期
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  
+
+
+  <view class='detail-box'>
+    <view class='flex-row-SpcBwn'>
+      <view class='text-label'>租金</view>
+      <picker bindchange="priceChange" value='6' range="{{priceArray}}">
+        <view wx:if="{{price}}" class='text-font'>
+          {{price}}￥
+        </view>
+        <view wx:else class='unselected-font'>
+          0￥
         </view>
       </picker>
     </view>
   </view>
 
   <view class='detail-box flex-row'>
-    <view class='text-font'>备注：</view>
+    <view class='text-label'>备注：</view>
     <textarea maxlength='100' placeholder='补充电动车描述或添加其他出租需求，不超过100字哦~' bindinput='noteInput' class='text-area'></textarea>
+  </view>
+
+  <view wx:if="{{!weixin || changeWeixin}}" class='detail-box'>
+    <view class='flex-row-item-center'>
+      <view class='text-font' style='margin-right:40rpx'>微信</view>
+      <input bindinput="weixinInput" placeholder="填写微信号后其他同学可方便联系你哦~" class='input-area' placeholder-style="font-size:0.88em" />
+    </view>
   </view>
 
   <button class='confirm-btn' style="position:fixed; bottom:0;" bindtap='compliteClick'>完成</button>

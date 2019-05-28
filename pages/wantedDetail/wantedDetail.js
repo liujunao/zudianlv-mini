@@ -1,5 +1,6 @@
-// pages/wantedPost/wantedPost.js
 const app = getApp()
+var utils = require('../../utils/util.js')
+var config = require('../../utils/config.js')
 Page({
   data: {
     orientedUrl: '../../assert/icons/oriented.png',
@@ -8,6 +9,7 @@ Page({
     collectIconSrc: '../../assert/icons/collect.png',
     postDetail: null,
     type: '', //类型 '':联系Ta , 1:确认发布
+    collected: false,
   },
   onLoad: function(options) {
     let postDetail = JSON.parse(options.postDetail);
@@ -22,8 +24,35 @@ Page({
     console.log("this postDetail", this.data.postDetail)
     console.log("type", this.data.type)
   },
+
+  /* 收藏 */
+  collectClick() {
+    let collected = this.data.collected;
+    this.setData({
+      collected: !collected
+    })
+
+    let publishId = this.data.postDetail.publishId
+    wx.request({
+      url: app.serverUrl + '/user/favorite/change',
+      method: "POST",
+      data: {
+        otherId: publishId,
+        openId: app.getGlobalUserInfo().openId,
+        type: 2
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log("收藏", res.data)
+      }
+    })
+
+  },
+
   publishClick() {
-    let weekdayArray = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+    wx.showNavigationBarLoading();
     let data = {
       openId: app.getGlobalUserInfo().openId,
       nickName: app.getGlobalUserInfo().nickName,
@@ -31,14 +60,19 @@ Page({
       avatarUrl: app.getGlobalUserInfo().avatarUrl,
       area: app.getGlobalUserInfo().area,
       areaNum: app.getGlobalUserInfo().areaNum,
-      weixin: '',
+      weixin: this.data.postDetail.weixin,
       message: this.data.postDetail.message,
       money: this.data.postDetail.money,
       yyyy: this.data.postDetail.yyyy,
-      week: weekdayArray.indexOf(this.data.postDetail.week) + 1,
+      week: '',
       beginTime: this.data.postDetail.beginTime,
       endTime: this.data.postDetail.endTime,
-      time: '' //未处理
+      createTime: utils.getCurrTime(),
+      status:0,
+    }
+    /* 缓存中没有微信信息则更新微信信息 */
+    if (!app.getGlobalUserInfo().weixin) {
+      config.updateUserInfo(data.weixin)
     }
     console.log("data: ", data)
     wx.request({
@@ -49,6 +83,10 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function(res) {
+        /* 在全局变量里设置新的post信息 */
+        app.globalData.wantedPost = data
+        app.globalData.newPostAdded = true
+
         console.log("上传租车信息", res.data)
         wx.showToast({
           title: '发布成功',
@@ -56,6 +94,7 @@ Page({
           duration: 1000,
           mask: true,
           success: function() {
+            wx.hideNavigationBarLoading()
             setTimeout(function() {
               //要延时执行的代码
               wx.switchTab({
@@ -71,6 +110,30 @@ Page({
   modifyClick() {
     wx.navigateTo({
       url: '../addWanted/addWanted'
+    })
+  },
+  contactClick() {
+    let weixin = this.data.postDetail.weixin
+    wx.setClipboardData({
+      data: weixin,
+      success(res) {
+        wx.getClipboardData({
+          success(res) {
+            console.log(res.data) // data
+          }
+        })
+      }
+    })
+    wx.showModal({
+      title: '提示',
+      content: '联系方式（微信ID）已复制到剪贴板',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
     })
   },
   /**

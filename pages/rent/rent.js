@@ -3,40 +3,44 @@ const app = getApp()
 var utils = require('../../utils/util.js')
 Page({
   data: {
+    switchUrl: '../../assert/icons/switch.png',
     orientedUrl: '../../assert/icons/oriented.png',
     manUrl: '../../assert/icons/man.png',
     womanUrl: '../../assert/icons/woman.png',
-    posts: [ //帖子数组
-      {
-        rentId: '',
-        openId: '',
-        nickName: 'Oka',
-        avatarUrl: '../../assert/icons/avater.jpg',
-        gender: 0, //man:0, woman:1
-        area: '韵苑',
-        areaNum: 16,
-        weixin: '',
-        message: '车比较旧，但可以正常使用，充一次电可以连续骑5,6个小时',
-        money: 1,
-        carImage: '../../assert/icons/mobile.png',
-        manned: 0, //0:可载人 1：不可 2：不限
-        rentTime: [{
-          week: '周一', //求租周几： 1->周一,2-->周二     ！！！需要写处理函数
-          beginTime: '12:00', //hh:mm
-          endTime: '18:00'
-        }, {
-          week: '周二', //求租周几： 1->周一,2-->周二
-          beginTime: '12:00', //hh:mm
-          endTime: '18:00'
-        }],
-        time: '3小时前',
-        rent: 1, //1：发布展示 2：发布未展示
+    reminder: '',
+    posts: [],
+    neiborPosts: [],
+    newestPosts: [],
+    newest: false
+  },
+  onShow() {
+    console.log(" rent onshow")
+    console.log("new post", app.globalData.rentPost)
+    console.log("new post", app.globalData.newPostAdded)
+    console.log("old posts", this.data.posts)
+    if (app.globalData.newPostAdded) {
+      app.globalData.newPostAdded = false
+      let newPost = utils.restoreRentItem(app.globalData.rentPost)
+      let posts = this.data.posts
+      for (let i = 0; i < posts.length; i++) {
+        if (posts[i].openId == newPost.openId) {
+          posts.splice(i, 1);
+          break;
+        }
       }
-    ]
+      posts.unshift(newPost)
+      this.setData({
+        posts: posts,
+        newestPosts: posts
+      })
+    }
   },
   onLoad: function() {
     console.log("rent onload")
     var that = this
+    wx.showLoading({
+      title: '正在加载',
+    })
     wx.request({
       url: app.serverUrl + '/rent/list',
       method: "POST",
@@ -45,24 +49,86 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function(res) {
-        console.log("出租列表：", res.data)
+        wx.hideLoading()
+        console.log("出租列表:", res.data)
         that.setData({
-          posts: utils.restoreRentInfo(res.data)
+          posts: utils.restoreRentInfo(res.data),
+          newestPosts: utils.restoreRentInfo(res.data)
         })
+        if (res.data.length === 0) {
+          that.setData({
+            reminder: '最近没有用户发布出租信息哦~'
+          })
+        }
       }
     })
   },
-  filterClick() {
-    wx.navigateTo({
-      url: '../filter/filter'
+  /* 切换到附近 */
+  switchToNeibor() {
+    wx.showNavigationBarLoading();
+    setTimeout(function() {
+      wx.hideNavigationBarLoading()
+    }, 500)
+    let posts = this.data.posts;
+    let area = app.getGlobalUserInfo().area;
+    let areaNum = app.getGlobalUserInfo().areaNum;
+    let neiborPosts = [];
+    /* 先添加同一公寓同一楼栋信息 */
+    for (let i = 0; i < posts.length; i++) {
+      if (posts[i].area == area && posts[i].areaNum == areaNum) {
+        neiborPosts.push(posts[i])
+      }
+    }
+    /* 再添加同一公寓不同楼栋信息 */
+    for (let i = 0; i < posts.length; i++) {
+      if (posts[i].area == area && posts[i].areaNum != areaNum) {
+        neiborPosts.push(posts[i])
+      }
+    }
+    console.log("附近的", neiborPosts)
+    this.setData({
+      posts: neiborPosts,
+      newest: true,
+      reminder: area + '暂没有用户发布出租信息哦~'
     })
   },
+  /* 切换到最新 */
+  switchToNewest() {
+    wx.showNavigationBarLoading();
+    setTimeout(function() {
+      wx.hideNavigationBarLoading()
+    }, 500)
+    console.log("切换到最新：", this.data.newestPosts)
+    this.setData({
+      posts: this.data.newestPosts,
+      newest: false,
+      reminder: '最近没有用户发布出租信息哦~'
+    })
+  },
+
+
   postClick(e) {
     console.log(e);
     let postDetail = e.currentTarget.dataset.postdetail;
     wx.navigateTo({
       url: '../rentDetail/rentDetail?postDetail=' + JSON.stringify(postDetail)
     })
+    /* 修改浏览次数 */
+    console.log("点击：",postDetail)
+    let count = postDetail.count || 0;
+    count = parseInt(count) + 1;
+    wx.request({
+      url: app.serverUrl + '/rent/count?rentId=' + postDetail.rentId + '&count=' + count,
+      method: "POST",
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log("修改count", res)
+      }
+    })
+
+
   },
   filterClick() {
     wx.navigateTo({

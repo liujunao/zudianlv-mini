@@ -9,6 +9,77 @@ Page({
   onLoad: function(options) {
 
   },
+
+
+/* 我的收藏 */
+myCollect(){
+  let openId = app.getGlobalUserInfo().openId
+  wx.request({
+    url: app.serverUrl + '/user/favorite?openId=' + openId,
+    method: "POST",
+    header: {
+      'content-type': 'application/json' // 默认值
+    },
+    success: function (res) {
+      console.log("我的收藏", res)
+    }
+  })
+  // wx.request({
+  //   url: app.serverUrl + '/user/rent/list?openId=' + app.getGlobalUserInfo().openId,
+  //   method: "POST",
+  //   header: {
+  //     'content-type': 'application/json' // 默认值
+  //   },
+  //   success: function (res) {
+  //     console.log("我的出租：", res.data)
+  //     let rentId = res.data.rent.rentId
+  //     console.log(rentId)
+  //     wx.request({
+  //       url: app.serverUrl + '/rent/count?rentId=' + rentId + '&count=' + 2,
+  //       method: "POST",
+  //       header: {
+  //         'content-type': 'application/json' // 默认值
+  //       },
+  //       success: function (res) {
+  //         console.log("修改count", res)
+  //       }
+  //     })
+
+  //   }
+  // })
+},
+
+rentCollect(){
+  wx.request({
+    url: app.serverUrl + '/user/rent/list?openId=' + app.getGlobalUserInfo().openId,
+    method: "POST",
+    header: {
+      'content-type': 'application/json' // 默认值
+    },
+    success: function (res) {
+      console.log("我的出租：", res.data)
+      let rentId = res.data.rent.rentId
+      console.log(rentId)
+      wx.request({
+        url: app.serverUrl + '/user/favorite/change',
+        method: "POST",
+        data: {
+          otherId: rentId,
+          openId: app.getGlobalUserInfo().openId,
+          type: 1
+        },
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: function (res) {
+          console.log("收藏", res.data)
+        }
+      })
+
+    }
+  })
+},
+
   //补全用户信息
   appendUser: function(e) {
     var formObject = e.detail.value
@@ -67,6 +138,95 @@ Page({
         app.setGlobalUserInfo(data)
       }
     })
+  },
+  //出租阅读数量
+  addRentCount() {
+
+
+
+    // wx.request({
+    //   url: app.serverUrl + '/user/publish/list?openId=' + app.getGlobalUserInfo().openId,
+    //   method: "POST",
+    //   header: {
+    //     'content-type': 'application/json' // 默认值
+    //   },
+    //   success: function (res) {
+    //     console.log("我的求租：", res.data)
+    //     let publishId = res.data[0].publishId
+    //     console.log(publishId)
+    //     wx.request({
+    //       url: app.serverUrl + '/user/publish/delete?publishId=' + publishId + '&openId=' + app.getGlobalUserInfo().openId,
+    //       method: "POST",
+    //       header: {
+    //         'content-type': 'application/json' // 默认值
+    //       },
+    //       success: function (res) {
+    //         console.log("修改状态", res)
+    //       }
+    //     })
+
+
+
+    // wx.request({
+    //   url: app.serverUrl + '/user/used/list?openId=' + app.getGlobalUserInfo().openId,
+    //   method: "POST",
+    //   header: {
+    //     'content-type': 'application/json' // 默认值
+    //   },
+    //   success: function(res) {
+    //     console.log("我的二手车：", res.data)
+    //     let usedId = res.data.usedId
+    //     console.log(usedId)
+    //     wx.request({
+    //       url: app.serverUrl + '/user/used/used?usedId=' + usedId + '&used=' + 2,
+    //       method: "POST",
+    //       header: {
+    //         'content-type': 'application/json' // 默认值
+    //       },
+    //       success: function(res) {
+    //         console.log("修改状态", res)
+    //       }
+    //     })
+
+
+
+     wx.request({
+      url: app.serverUrl + '/user/rent/list?openId=' + app.getGlobalUserInfo().openId,
+      method: "POST",
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        console.log("我的出租：", res.data)
+        let rentId = res.data.rent.rentId
+        console.log(rentId)
+        wx.request({
+          url: app.serverUrl + '/rent/count?rentId=' + rentId + '&count=' + 2,
+          method: "POST",
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: function (res) {
+            console.log("修改count", res)
+          }
+        })
+       
+      }
+    })
+    // if (rentId) {
+    //   console.log("rentId",rentId)
+    //   wx.request({
+    //     url: app.serverUrl + '/rent/count?rentId='+rentId+'&count='+1,
+    //     method: "POST",
+    //     header: {
+    //       'content-type': 'application/json' // 默认值
+    //     },
+    //     success: function(res) {
+    //       console.log("修改count", res)
+    //     }
+    //   })
+    // }
+
   },
   //出租信息添加
   addRent() {
@@ -154,7 +314,7 @@ Page({
     })
   },
   //二手车信息添加
-  addUsed(){
+  addUsed() {
     let data = {
       openId: app.getGlobalUserInfo().openId,
       nickName: app.getGlobalUserInfo().nickName,
@@ -163,11 +323,12 @@ Page({
       area: app.getGlobalUserInfo().area,
       areaNum: app.getGlobalUserInfo().areaNum,
       weixin: app.getGlobalUserInfo().weixin,
-      usedImage:this.data.hustImage,
+      usedImage: this.data.hustImage,
+      createTime: '1999-01-01',
       message: 'ershouershou',
       money: '1',
-      used:1,
-      usedId:'1'
+      used: 1,
+      usedId: '1'
     }
     console.log("data: ", data)
     wx.request({
@@ -177,7 +338,7 @@ Page({
       header: {
         'content-type': 'application/json' // 默认值
       },
-      success: function (res) {
+      success: function(res) {
         console.log("上传租车信息", res.data)
       }
     })
@@ -229,19 +390,19 @@ Page({
 
   },
   //发布二手车照片
-  addUsedCarPic(){
+  addUsedCarPic() {
     var that = this
     wx.uploadFile({
       url: app.serverUrl + '/user/used/addCar?openId=' + app.getGlobalUserInfo().openId,
       filePath: that.data.hustImage,
       name: 'car',
-      success: function (res) {
-        console.log("请求成功",res.data)
-        // var data = JSON.parse(res.data)
-        // console.log(data.carImage)
-        // that.setData({
-        //   hustImage: app.serverUrl + data.carImage
-        // })
+      success: function(res) {
+        console.log("请求成功", res.data)
+        var data = JSON.parse(res.data)
+        console.log(data)
+        that.setData({
+          hustImage: app.serverUrl + data.usedImage
+        })
       }
     })
   },
@@ -282,7 +443,8 @@ Page({
     })
   },
 
-  getUsedListClick(){
+  getUsedListClick() {
+    var that = this
     wx.request({
       url: app.serverUrl + '/used/list',
       method: "POST",
@@ -290,22 +452,26 @@ Page({
       header: {
         'content-type': 'application/json' // 默认值
       },
-      success: function (res) {
+      success: function(res) {
         console.log("二手车列表：", res.data)
+        that.setData({
+          hustImage: app.serverUrl + res.data[0].usedImage
+        })
       }
     })
   },
-  getMyRent(){
-    let data = { openId: app.getGlobalUserInfo().openId}
-    console.log("data:",data)
+  getMyRent() {
+    let data = {
+      openId: app.getGlobalUserInfo().openId
+    }
+    console.log("data:", data)
     wx.request({
-      url: app.serverUrl + '/user/rent/list',
+      url: app.serverUrl + '/user/used/list?openId=' + app.getGlobalUserInfo().openId,
       method: "POST",
-      data: data,
       header: {
         'content-type': 'application/json' // 默认值
       },
-      success: function (res) {
+      success: function(res) {
         console.log("我的出租：", res.data)
       }
     })
